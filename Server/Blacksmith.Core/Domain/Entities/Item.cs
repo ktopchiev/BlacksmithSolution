@@ -23,7 +23,7 @@ namespace Blacksmith.Core.Domain.Entities
 
     public static class ItemExtension
     {
-        public static ItemResponse ToItemResponse(this Item item)
+        public static ItemResponse? ToItemResponse(this Item item)
         {
             return new ItemResponse
             {

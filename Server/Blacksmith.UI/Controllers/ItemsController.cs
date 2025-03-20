@@ -23,6 +23,16 @@ namespace Blacksmith.UI.Controllers
             return Ok(await _itemGetterService.GetAllItemsAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ItemResponse>> GetItemByIdAsync(Guid itemId)
+        {
+            ItemResponse itemResponse = await _itemGetterService.GetItemByIdAsync(itemId);
+
+            if (itemResponse == null) return NotFound();
+
+            return itemResponse;
+        }
+
         [HttpPost]
         public async Task<ActionResult<ItemResponse>> AddItemAsync(ItemAddRequest itemAddRequest)
         {

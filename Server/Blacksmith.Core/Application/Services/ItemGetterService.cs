@@ -19,5 +19,15 @@ namespace Blacksmith.Core.Application.Services
             var items = await _itemRepository.GetAllItemsAsync();
             return items.Select(i => i.ToItemResponse()).ToList();
         }
+
+        
+        public async Task<ItemResponse?> GetItemByIdAsync(Guid itemId)
+        {
+            if (itemId == Guid.Empty) throw new ArgumentNullException(nameof(itemId));
+
+            Item item = await _itemRepository.GetItemByIdAsync(itemId);
+
+            return item.ToItemResponse();
+        }
     }
 }
