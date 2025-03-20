@@ -1,0 +1,65 @@
+
+using Blacksmith.Core.Application.ServiceContracts;
+using Blacksmith.Core.Application.Services;
+using Blacksmith.Core.Domain.RepositoryContracts;
+using Blacksmith.Infrastructure;
+using Blacksmith.Infrastructure.BlacksmithDbContext;
+using Blacksmith.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
+
+namespace Blacksmith.UI
+{
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to the container.
+
+            builder.Services.AddControllers();
+            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            builder.Services.AddOpenApi();
+
+            builder.Services.AddScoped<IItemRepository, ItemRepository>();
+            builder.Services.AddScoped<IItemAdderService, ItemAdderService>();
+            builder.Services.AddScoped<IItemGetterService, ItemGetterService>();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+                {
+                    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+                }
+            );
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.MapOpenApi();
+                app.MapScalarApiReference();
+            }
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            var scope = app.Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            try
+            {
+                await context.Database.MigrateAsync();
+                await DbInitializer.Initialize(context);
+            }
+            catch (System.Exception)
+            {
+                throw new Exception();
+            }
+
+            app.Run();
+        }
+    }
+}
