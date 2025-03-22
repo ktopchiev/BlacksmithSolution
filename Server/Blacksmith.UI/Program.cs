@@ -32,6 +32,8 @@ namespace Blacksmith.UI
                 }
             );
 
+            builder.Services.AddCors();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -41,6 +43,11 @@ namespace Blacksmith.UI
                 app.MapOpenApi();
                 app.MapScalarApiReference();
             }
+
+            app.UseCors(opt =>
+            {
+                opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:5173");
+            });
 
             app.UseAuthorization();
 
