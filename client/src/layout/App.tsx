@@ -1,4 +1,4 @@
-import Inventory from "../features/inventory/Inventory"
+import { Outlet } from "react-router"
 import Header from "./Header"
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 	return (
 		<>
 			<Header />
-			<Inventory />
+			<Outlet />
 		</>
 	)
 }
