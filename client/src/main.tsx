@@ -19,12 +19,13 @@ createRoot(document.getElementById('root')!).render(
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<App />} >
-					<Route path="/home" element={<HomePage />} />
-					<Route path="/inventory" element={<InventoryPage />} >
+					<Route path="home" element={<HomePage />} />
+					<Route path="inventory">
+						<Route index element={<InventoryPage />} />
 						<Route path=":itemId" element={<ItemPage />} />
 					</Route>
-					<Route path="/about" element={<AboutPage />} />
-					<Route path="/contacts" element={<ContactsPage />} />
+					<Route path="about" element={<AboutPage />} />
+					<Route path="contacts" element={<ContactsPage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

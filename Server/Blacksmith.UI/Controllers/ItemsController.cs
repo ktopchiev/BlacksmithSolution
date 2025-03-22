@@ -24,9 +24,9 @@ namespace Blacksmith.UI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ItemResponse>> GetItemByIdAsync(Guid itemId)
+        public async Task<ActionResult<ItemResponse>> GetItemByIdAsync(Guid id)
         {
-            ItemResponse itemResponse = await _itemGetterService.GetItemByIdAsync(itemId);
+            ItemResponse itemResponse = await _itemGetterService.GetItemByIdAsync(id);
 
             if (itemResponse == null) return NotFound();
 

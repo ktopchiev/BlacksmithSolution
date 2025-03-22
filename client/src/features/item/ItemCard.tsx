@@ -1,11 +1,18 @@
-import { Card, CardContent, Typography, Box, CardActions, Button, Paper } from "@mui/material";
+import { Card, CardContent, Typography, Box, CardActions, Button, Paper, CardActionArea } from "@mui/material";
 import { Item } from "../../models/Item";
+import { useNavigate } from "react-router";
 
 interface Props {
     item: Item
 }
 
 export default function ItemCard({ item }: Props) {
+    const navigate = useNavigate();
+
+    function handleClickCard(itemId: string) {
+        navigate(itemId);
+    }
+
     return (
         <Paper sx={{ backgroundColor: "rgb(66, 48, 48)" }}>
             <Card
@@ -24,23 +31,25 @@ export default function ItemCard({ item }: Props) {
                     overflow: "hidden",
                 }}
             >
-                <CardContent sx={{ textAlign: "center", px: 0 }}>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            fontFamily: "'MedievalSharp', cursive",
-                            color: "rgb(239, 209, 120)",
-                            textShadow: "2px 2px 8px rgba(255, 255, 255, 0.3)",
-                        }}
-                    >
-                        {item.name}
-                    </Typography>
-                    <Box component="img"
-                        src={item.imageUrl}
-                        alt={item.name}
-                        sx={{ width: "230px", height: "auto", maxHeight: "200px" }}
-                    />
-                </CardContent>
+                <CardActionArea onClick={() => handleClickCard(item.itemId)}>
+                    <CardContent sx={{ textAlign: "center", px: 0 }}>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontFamily: "'MedievalSharp', cursive",
+                                color: "rgb(239, 209, 120)",
+                                textShadow: "2px 2px 8px rgba(255, 255, 255, 0.3)",
+                            }}
+                        >
+                            {item.name}
+                        </Typography>
+                        <Box component="img"
+                            src={item.imageUrl}
+                            alt={item.name}
+                            sx={{ width: "230px", height: "auto", maxHeight: "200px" }}
+                        />
+                    </CardContent>
+                </CardActionArea>
                 <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button
                         variant="contained"
