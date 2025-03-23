@@ -49,9 +49,8 @@ export default function Header() {
                 display: "flex",
             }}>
                 {navLinks.map(link =>
-                    <Typography sx={{ fontFamily: "'MedievalSharp',  cursive", color: "white", fontSize: "25px", px: 1 }}>
+                    <Typography key={link.path} sx={{ fontFamily: "'MedievalSharp',  cursive", color: "white", fontSize: "25px", px: 1 }}>
                         <NavLink
-                            key={link.path}
                             to={link.path}
                             className={({ isActive, isPending }) =>
                                 isPending ? "pending" : isActive ? "active" : ""

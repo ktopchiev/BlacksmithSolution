@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Box, CardActions, Button, Paper, CardActionArea } from "@mui/material";
+import { Card, CardContent, Typography, Box, CardActions, Button, Paper, CardActionArea, Rating } from "@mui/material";
 import { Item } from "../../models/Item";
 import { useNavigate } from "react-router";
 
@@ -21,6 +21,7 @@ export default function ItemCard({ item }: Props) {
                     flexDirection: "column",
                     justifyContent: "space-between",
                     minWidth: 250,
+                    maxWidth: 230,
                     height: 350,
                     position: "relative",
                     backgroundColor: "rgba(0, 0, 0, 0.12)",
@@ -50,7 +51,8 @@ export default function ItemCard({ item }: Props) {
                         />
                     </CardContent>
                 </CardActionArea>
-                <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <CardActions sx={{ display: "flex", flexDirection: "column" }}>
+                    <Rating max={5} value={item.rating} readOnly sx={{ mb: 1 }} />
                     <Button
                         variant="contained"
                         size="small"
@@ -59,7 +61,7 @@ export default function ItemCard({ item }: Props) {
                             backgroundColor: "darkkhaki",
                             "&: hover": {
                                 color: "white",
-                                backgroundColor: "rgb(122, 112, 0)"
+                                backgroundColor: "rgb(67, 122, 0)"
                             }
                         }}
                     >
