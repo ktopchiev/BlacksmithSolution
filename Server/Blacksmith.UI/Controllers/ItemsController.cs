@@ -30,7 +30,7 @@ namespace Blacksmith.UI.Controllers
 
             if (itemResponse == null) return NotFound();
 
-            return itemResponse;
+            return Ok(itemResponse);
         }
 
         [HttpPost]
