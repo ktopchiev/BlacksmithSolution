@@ -1,4 +1,3 @@
-
 using Blacksmith.Core.Application.ServiceContracts;
 using Blacksmith.Core.Application.Services;
 using Blacksmith.Core.Domain.RepositoryContracts;
@@ -37,6 +36,8 @@ namespace Blacksmith.UI
 
             var app = builder.Build();
 
+            app.UseMiddleware<ExceptionMiddleware>();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -45,7 +46,6 @@ namespace Blacksmith.UI
                 app.MapScalarApiReference();
             }
 
-            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseCors(opt =>
             {
@@ -58,15 +58,16 @@ namespace Blacksmith.UI
 
             var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
             try
             {
                 await context.Database.MigrateAsync();
                 await DbInitializer.Initialize(context);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                logger.LogError(ex, "There's a problem with the database migration");
             }
 
             app.Run();
