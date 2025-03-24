@@ -5,6 +5,7 @@ using Blacksmith.Core.Domain.RepositoryContracts;
 using Blacksmith.Infrastructure;
 using Blacksmith.Infrastructure.BlacksmithDbContext;
 using Blacksmith.Infrastructure.Repositories;
+using Blacksmith.UI.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -43,6 +44,8 @@ namespace Blacksmith.UI
                 app.MapOpenApi();
                 app.MapScalarApiReference();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseCors(opt =>
             {
