@@ -34,7 +34,7 @@ export default function Header() {
         >
             <Toolbar>
                 <Link
-                    href="/home"
+                    href="/"
                     variant="h4"
                     sx={{
                         fontFamily: "'MedievalSharp',  cursive",
