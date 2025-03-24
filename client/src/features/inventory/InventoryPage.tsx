@@ -2,17 +2,21 @@ import { Grid2 } from "@mui/material";
 import ItemCard from "../item/ItemCard";
 import { useEffect, useState } from "react";
 import { Item } from "../../models/Item";
+import { api } from "../../api/api";
 
 export default function Inventory() {
     const [items, setItems] = useState<Item[]>([]);
-    const url = "http://localhost:5146/api/Items";
 
     useEffect(() => {
 
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setItems(data))
+        const fetchItems = async () => {
+            const items = await api.Items.getAllItems();
+            setItems(items);
+        }
+
+        fetchItems()
             .catch(err => console.log(err));
+
     }, [])
 
     return (

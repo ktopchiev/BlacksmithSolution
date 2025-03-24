@@ -2,24 +2,27 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { Item } from "../../models/Item";
 import { Box, Container, Grid2, Rating, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { api } from "../../api/api";
 
 export default function ItemPage() {
+
     const params = useParams();
     const [item, setItem] = useState<Item | null>(null);
     const [rating, setRating] = useState<number>(0);
 
-    const baseUrl = "http://localhost:5146/api/Items/";
-
     useEffect(() => {
-        fetch(`${baseUrl}${params.itemId}`)
-            .then(res => res.json())
-            .then(item => {
-                setItem(item);
-                setRating(item.rating);
-            })
+        const fetchItem = async () => {
+
+            const item = await api.Items.getItemById(`${params.itemId}`);
+            setItem(item);
+            setRating(item.rating);
+        }
+
+        fetchItem()
             .catch(err => console.log(err));
+
     }, [params])
-    console.log(item?.imageUrl);
+
     return (
         <Container>
             <Grid2 container spacing={6}>

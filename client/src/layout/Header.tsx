@@ -29,6 +29,7 @@ export default function Header() {
                 backgroundImage: "url(/images/black-wood-pattern.jpg)",
                 backgroundSize: "cover",
                 color: "white",
+                backgroundColor: "transparent",
                 mb: 4
             }}
         >
