@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { Item } from "../../models/Item";
-import { Box, Container, Grid2, Rating, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Box, Container, Grid2, LinearProgress, Rating, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { api } from "../../api/api";
 
 export default function ItemPage() {
 
     const params = useParams();
     const [item, setItem] = useState<Item | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [rating, setRating] = useState<number>(0);
 
     useEffect(() => {
@@ -19,9 +20,12 @@ export default function ItemPage() {
         }
 
         fetchItem()
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+            .finally(() => setIsLoading(false));
 
     }, [params])
+
+    if (isLoading) return <LinearProgress color="inherit" />
 
     return (
         <Container>

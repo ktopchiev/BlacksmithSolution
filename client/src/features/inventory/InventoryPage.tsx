@@ -1,4 +1,4 @@
-import { Grid2 } from "@mui/material";
+import { Grid2, LinearProgress } from "@mui/material";
 import ItemCard from "../item/ItemCard";
 import { useEffect, useState } from "react";
 import { Item } from "../../models/Item";
@@ -6,6 +6,7 @@ import { api } from "../../api/api";
 
 export default function Inventory() {
     const [items, setItems] = useState<Item[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
 
@@ -15,9 +16,12 @@ export default function Inventory() {
         }
 
         fetchItems()
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+            .finally(() => setIsLoading(false));
 
     }, [])
+
+    if (isLoading) return <LinearProgress color="inherit" />
 
     return (
         <>
