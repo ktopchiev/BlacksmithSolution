@@ -6,14 +6,17 @@ export const itemsApiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:5146/api",
     }),
+    tagTypes: ['Items'],
     endpoints: (builder) => {
         return {
             getAllItems: builder.query<Item[], void>({
                 query: () => `/items`,
+                providesTags: ['Items']
             }),
 
             getItem: builder.query<Item, string>({
-                query: itemId => `/items/${itemId}`
+                query: itemId => `/items/${itemId}`,
+                providesTags: ['Items']
             }),
 
             addItem: builder.mutation({
@@ -22,6 +25,7 @@ export const itemsApiSlice = createApi({
                     method: "POST",
                     body: item,
                 }),
+                invalidatesTags: ['Items']
             }),
         }
     }

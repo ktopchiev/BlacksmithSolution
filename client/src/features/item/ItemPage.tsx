@@ -3,6 +3,7 @@ import { useGetItemQuery } from "../../state/items/itemApiSlice";
 import { useParams } from "react-router";
 
 export default function ItemPage() {
+
     const { itemId } = useParams();
     const { data: item, isLoading, isError } = useGetItemQuery(itemId!);
 
