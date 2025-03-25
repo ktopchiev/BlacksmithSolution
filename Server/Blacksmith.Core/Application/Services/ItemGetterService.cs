@@ -20,12 +20,14 @@ namespace Blacksmith.Core.Application.Services
             return items.Select(i => i.ToItemResponse()).ToList();
         }
 
-        
+
         public async Task<ItemResponse?> GetItemByIdAsync(Guid itemId)
         {
             if (itemId == Guid.Empty) throw new ArgumentNullException(nameof(itemId));
 
-            Item item = await _itemRepository.GetItemByIdAsync(itemId);
+            Item? item = await _itemRepository.GetItemByIdAsync(itemId);
+
+            if (item == null) return null;
 
             return item.ToItemResponse();
         }
