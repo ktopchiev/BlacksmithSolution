@@ -12,22 +12,26 @@ import InventoryPage from './features/inventory/InventoryPage.tsx';
 import AboutPage from './features/AboutPage.tsx';
 import ContactsPage from './features/ContactsPage.tsx';
 import ItemPage from './features/item/ItemPage.tsx';
+import { Provider } from 'react-redux';
+import { store } from './state/store.ts';
 
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<App />} >
-					<Route index element={<HomePage />} />
-					<Route path="inventory">
-						<Route index element={<InventoryPage />} />
-						<Route path=":itemId" element={<ItemPage />} />
+		<Provider store={store}>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<App />} >
+						<Route index element={<HomePage />} />
+						<Route path="inventory">
+							<Route index element={<InventoryPage />} />
+							<Route path=":itemId" element={<ItemPage />} />
+						</Route>
+						<Route path="about" element={<AboutPage />} />
+						<Route path="contacts" element={<ContactsPage />} />
 					</Route>
-					<Route path="about" element={<AboutPage />} />
-					<Route path="contacts" element={<ContactsPage />} />
-				</Route>
-			</Routes>
-		</BrowserRouter>
+				</Routes>
+			</BrowserRouter>
+		</Provider>
 	</StrictMode >,
 )

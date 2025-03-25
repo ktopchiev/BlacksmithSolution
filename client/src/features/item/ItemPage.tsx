@@ -1,31 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router"
-import { Item } from "../../models/Item";
 import { Box, Container, Grid2, LinearProgress, Rating, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import { api } from "../../api/api";
+import { useGetItemQuery } from "../../state/items/itemApiSlice";
+import { useParams } from "react-router";
 
 export default function ItemPage() {
-
-    const params = useParams();
-    const [item, setItem] = useState<Item | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [rating, setRating] = useState<number>(0);
-
-    useEffect(() => {
-        const fetchItem = async () => {
-
-            const item = await api.Items.getItemById(`${params.itemId}`);
-            setItem(item);
-            setRating(item.rating);
-        }
-
-        fetchItem()
-            .catch(err => console.log(err))
-            .finally(() => setIsLoading(false));
-
-    }, [params])
+    const { itemId } = useParams();
+    const { data: item, isLoading, isError } = useGetItemQuery(itemId!);
 
     if (isLoading) return <LinearProgress color="inherit" />
+
+    if (isError) return <div>Error</div>
 
     return (
         <Container>
@@ -88,7 +71,7 @@ export default function ItemPage() {
                                 <TableRow>
                                     <TableCell>Rating</TableCell>
                                     <TableCell>
-                                        <Rating max={5} value={rating} readOnly sx={{ mb: 1 }} />
+                                        <Rating max={5} value={0} readOnly sx={{ mb: 1 }} />
                                     </TableCell>
                                 </TableRow>
                             </TableBody>
