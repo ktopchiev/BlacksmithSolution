@@ -14,7 +14,7 @@ export const itemsApiSlice = createApi({
                 providesTags: ['Items']
             }),
 
-            getItem: builder.query<Item, string>({
+            getItemById: builder.query<Item, string>({
                 query: itemId => `/items/${itemId}`,
                 providesTags: ['Items']
             }),
@@ -31,4 +31,4 @@ export const itemsApiSlice = createApi({
     }
 });
 
-export const { useGetAllItemsQuery, useGetItemQuery, useAddItemMutation } = itemsApiSlice;
+export const { useGetAllItemsQuery, useGetItemByIdQuery, useAddItemMutation } = itemsApiSlice;
