@@ -5,11 +5,9 @@ import { useParams } from "react-router";
 export default function ItemPage() {
 
     const { itemId } = useParams();
-    const { data: item, isLoading, isError } = useGetItemByIdQuery(itemId!);
+    const { data: item, isLoading } = useGetItemByIdQuery(itemId!);
 
     if (isLoading) return <LinearProgress color="inherit" />
-
-    if (isError) return <div>Error</div>
 
     return (
         <Container>

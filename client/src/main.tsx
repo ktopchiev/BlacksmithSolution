@@ -14,6 +14,7 @@ import ContactsPage from './features/ContactsPage.tsx';
 import ItemPage from './features/item/ItemPage.tsx';
 import { Provider } from 'react-redux';
 import { store } from './state/store.ts';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 createRoot(document.getElementById('root')!).render(
