@@ -3,7 +3,7 @@ using Blacksmith.Core.Domain.Entities;
 
 namespace Blacksmith.Core.Domain.Models
 {
-    public class PaginatedList<T> : List<T>
+    public class PaginatedList<T>
     {
         public PaginatedList(IEnumerable<T> list, int currentPageNumber, int itemsOnPage)
         {
@@ -11,14 +11,14 @@ namespace Blacksmith.Core.Domain.Models
             ItemsOnPage = itemsOnPage;
             CurrentPageNumber = currentPageNumber;
             TotalPages = list.Count() / itemsOnPage;
-            AddRange(list);
+            Items.AddRange(list);
         }
 
         public int ItemsCount { get; set; }
         public int ItemsOnPage { get; set; }
         public int TotalPages { get; set; }
         public int CurrentPageNumber { get; set; }
-        public List<T>? Items { get; set; }
+        public List<T> Items { get; set; } = []; // Initialize
     }
 
     public static class PaginatedListExtension
