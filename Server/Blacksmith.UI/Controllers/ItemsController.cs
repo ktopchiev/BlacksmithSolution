@@ -1,5 +1,7 @@
 ﻿using Blacksmith.Core.Application.DTOs;
 using Blacksmith.Core.Application.ServiceContracts;
+using Blacksmith.Core.Domain.Helpers;
+using Blacksmith.Core.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blacksmith.UI.Controllers
@@ -18,15 +20,16 @@ namespace Blacksmith.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ItemResponse>>> GetAllItemsAsync()
+        public async Task<ActionResult<PaginatedList<ItemResponse>>> GetAllItemsAsync([FromQuery] ItemParams itemParams)
         {
-            return Ok(await _itemGetterService.GetAllItemsAsync());
+            var paginatedItemList = await _itemGetterService.GetAllItemsAsync(itemParams);
+            return Ok(paginatedItemList);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ItemResponse>> GetItemByIdAsync(Guid id)
         {
-            ItemResponse itemResponse = await _itemGetterService.GetItemByIdAsync(id);
+            ItemResponse? itemResponse = await _itemGetterService.GetItemByIdAsync(id);
 
             if (itemResponse == null) return NotFound();
 

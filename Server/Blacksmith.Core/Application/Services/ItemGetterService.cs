@@ -1,7 +1,10 @@
 using Blacksmith.Core.Application.DTOs;
 using Blacksmith.Core.Application.ServiceContracts;
 using Blacksmith.Core.Domain.Entities;
+using Blacksmith.Core.Domain.Helpers;
+using Blacksmith.Core.Domain.Models;
 using Blacksmith.Core.Domain.RepositoryContracts;
+
 
 namespace Blacksmith.Core.Application.Services
 {
@@ -14,11 +17,15 @@ namespace Blacksmith.Core.Application.Services
             _itemRepository = itemRepository;
         }
 
-        public async Task<List<ItemResponse>> GetAllItemsAsync()
+        public async Task<PaginatedList<ItemResponse>?> GetAllItemsAsync(ItemParams itemParams)
         {
-            var items = await _itemRepository.GetAllItemsAsync();
-            return items.Select(i => i.ToItemResponse()).ToList();
+            PaginatedList<ItemResponse> itemList = await _itemRepository.GetAllItemsAsync(itemParams);
+
+            if (itemList == null) return null;
+
+            return itemList;
         }
+
 
 
         public async Task<ItemResponse?> GetItemByIdAsync(Guid itemId)

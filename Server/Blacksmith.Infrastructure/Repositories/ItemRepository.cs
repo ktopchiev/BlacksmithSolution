@@ -1,4 +1,7 @@
-﻿using Blacksmith.Core.Domain.Entities;
+﻿using Blacksmith.Core.Application.DTOs;
+using Blacksmith.Core.Domain.Entities;
+using Blacksmith.Core.Domain.Helpers;
+using Blacksmith.Core.Domain.Models;
 using Blacksmith.Core.Domain.RepositoryContracts;
 using Blacksmith.Infrastructure.BlacksmithDbContext;
 using Microsoft.EntityFrameworkCore;
@@ -26,14 +29,22 @@ namespace Blacksmith.Infrastructure.Repositories
             return await _db.Items.FindAsync(itemId);
         }
 
-        public async Task<List<Item>> GetAllItemsAsync()
+        public async Task<PaginatedList<ItemResponse>> GetAllItemsAsync(ItemParams itemParams)
         {
-            return await _db.Items.ToListAsync();
+            var itemList = await _db.Items
+                .Skip((itemParams.ItemsOnPage * itemParams.CurrentPageNumber) - itemParams.ItemsOnPage)
+                .Take(itemParams.ItemsOnPage)
+                .OrderBy(i => i.Name)
+                .ToListAsync();
+
+            var itemsCount = await _db.Items.CountAsync();
+
+            return itemList.ToPaginatedList(itemParams.CurrentPageNumber, itemParams.ItemsOnPage);
         }
 
         public async Task<bool> UpdateItemAsync(Item item, Guid itemId)
         {
-            Item currentItem = await _db.Items.FindAsync(itemId);
+            Item? currentItem = await _db.Items.FindAsync(itemId);
 
             if (currentItem == null)
                 return false;
@@ -54,7 +65,7 @@ namespace Blacksmith.Infrastructure.Repositories
 
         public async Task<bool> DeleteItemAsync(Guid itemId)
         {
-            Item item = await _db.Items.FindAsync(itemId);
+            Item? item = await _db.Items.FindAsync(itemId);
 
             if (item == null) return false;
 

@@ -1,4 +1,7 @@
-﻿using Blacksmith.Core.Domain.Entities;
+﻿using Blacksmith.Core.Application.DTOs;
+using Blacksmith.Core.Domain.Entities;
+using Blacksmith.Core.Domain.Helpers;
+using Blacksmith.Core.Domain.Models;
 
 namespace Blacksmith.Core.Domain.RepositoryContracts
 {
@@ -8,6 +11,6 @@ namespace Blacksmith.Core.Domain.RepositoryContracts
         Task<Item?> GetItemByIdAsync(Guid itemId);
         Task<bool> UpdateItemAsync(Item item, Guid itemId);
         Task<bool> DeleteItemAsync(Guid itemId);
-        Task<List<Item>> GetAllItemsAsync();
+        Task<PaginatedList<ItemResponse>> GetAllItemsAsync(ItemParams itemParams);
     }
 }
