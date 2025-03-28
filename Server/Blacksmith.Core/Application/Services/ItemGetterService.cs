@@ -21,7 +21,7 @@ namespace Blacksmith.Core.Application.Services
         {
             PaginatedList<ItemResponse> itemList = await _itemRepository.GetAllItemsAsync(itemParams);
 
-            if (itemList == null) return null;
+            if (itemList == null || !itemList.Items.Any()) return null;
 
             return itemList;
         }

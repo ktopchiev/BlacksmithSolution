@@ -35,11 +35,12 @@ namespace Blacksmith.Infrastructure.Repositories
                 .Skip((itemParams.ItemsOnPage * itemParams.CurrentPageNumber) - itemParams.ItemsOnPage)
                 .Take(itemParams.ItemsOnPage)
                 .OrderBy(i => i.Name)
+                .Select(i => i.ToItemResponse())
                 .ToListAsync();
 
             var itemsCount = await _db.Items.CountAsync();
 
-            return itemList.ToPaginatedList(itemParams.CurrentPageNumber, itemParams.ItemsOnPage);
+            return new PaginatedList<ItemResponse>(itemList, itemsCount, itemParams.CurrentPageNumber, itemParams.ItemsOnPage);
         }
 
         public async Task<bool> UpdateItemAsync(Item item, Guid itemId)

@@ -25,7 +25,7 @@ namespace Blacksmith.Core.Application.Services
 
             Item resultItem = await _itemRepository.AddItemAsync(item);
 
-            return resultItem.ToItemResponse();
+            return resultItem!.ToItemResponse()!;
         }
     }
 }
