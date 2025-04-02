@@ -4,6 +4,7 @@ using Blacksmith.Core.Domain.Helpers;
 using Blacksmith.Core.Domain.Models;
 using Blacksmith.Core.Domain.RepositoryContracts;
 using Blacksmith.Infrastructure.BlacksmithDbContext;
+using Blacksmith.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blacksmith.Infrastructure.Repositories
@@ -34,7 +35,7 @@ namespace Blacksmith.Infrastructure.Repositories
             var itemList = await _db.Items
                 .Skip((itemParams.ItemsOnPage * itemParams.CurrentPageNumber) - itemParams.ItemsOnPage)
                 .Take(itemParams.ItemsOnPage)
-                .OrderBy(i => i.Name)
+                .Sort(itemParams.OrderBy!)
                 .Select(i => i.ToItemResponse())
                 .ToListAsync();
 

@@ -7,8 +7,6 @@ namespace Blacksmith.Infrastructure
     {
         public static async Task Initialize(ApplicationDbContext db)
         {
-            await db.Database.EnsureCreatedAsync();
-
             if (db == null) throw new ArgumentNullException(nameof(db));
 
             if (db.Items.Any()) return;
