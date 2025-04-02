@@ -1,5 +1,5 @@
 import { Box, Container, Grid2, LinearProgress, Rating, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import { useGetItemByIdQuery } from "../../state/items/itemApiSlice";
+import { useGetItemByIdQuery } from "../../App/state/items/itemApiSlice";
 import { useParams } from "react-router";
 
 export default function ItemPage() {
