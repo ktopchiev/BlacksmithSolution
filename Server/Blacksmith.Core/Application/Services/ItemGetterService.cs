@@ -38,5 +38,10 @@ namespace Blacksmith.Core.Application.Services
 
             return item.ToItemResponse();
         }
+
+        public async Task<ItemFilters> GetItemFiltersAsync()
+        {
+            return await _itemRepository.GetItemFiltersAsync();
+        }
     }
 }

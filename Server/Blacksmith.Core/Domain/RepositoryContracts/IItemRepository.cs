@@ -12,5 +12,6 @@ namespace Blacksmith.Core.Domain.RepositoryContracts
         Task<bool> UpdateItemAsync(Item item, Guid itemId);
         Task<bool> DeleteItemAsync(Guid itemId);
         Task<PaginatedList<ItemResponse>> GetAllItemsAsync(ItemParams itemParams);
+        Task<ItemFilters> GetItemFiltersAsync();
     }
 }

@@ -36,6 +36,16 @@ namespace Blacksmith.UI.Controllers
             return Ok(itemResponse);
         }
 
+        [HttpGet("filters")]
+        public async Task<ActionResult<ItemFilters>> GetItemFiltersAsync()
+        {
+            var itemFilters = await _itemGetterService.GetItemFiltersAsync();
+
+            if (itemFilters == null) return NoContent();
+
+            return Ok(itemFilters);
+        }
+
         [HttpPost]
         public async Task<ActionResult<ItemResponse>> AddItemAsync(ItemAddRequest itemAddRequest)
         {

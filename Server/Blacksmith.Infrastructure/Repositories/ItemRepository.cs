@@ -77,5 +77,33 @@ namespace Blacksmith.Infrastructure.Repositories
 
             return true;
         }
+
+        public async Task<ItemFilters> GetItemFiltersAsync()
+        {
+            List<Item> items = await _db.Items.ToListAsync();
+
+            if (items == null) return null;
+
+            var itemFilters = new ItemFilters();
+
+            return new ItemFilters()
+            {
+                Categories = items.Where(i => i.Category != "")
+                    .Select(i => i.Category)
+                    .Distinct()
+                    .Order()
+                    .ToList()!,
+                Colors = items.Where(i => i.Color != "")
+                    .Select(i => i.Color)
+                    .Distinct()
+                    .Order()
+                    .ToList()!,
+                Materials = items.Where(i => i.Material != "")
+                    .Select(i => i.Material)
+                    .Distinct()
+                    .Order()
+                    .ToList()!,
+            };
+        }
     }
 }
