@@ -84,8 +84,6 @@ namespace Blacksmith.Infrastructure.Repositories
 
             if (items == null) return null;
 
-            var itemFilters = new ItemFilters();
-
             return new ItemFilters()
             {
                 Categories = items.Where(i => i.Category != "")
