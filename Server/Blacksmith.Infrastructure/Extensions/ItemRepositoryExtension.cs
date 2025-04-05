@@ -7,7 +7,7 @@ namespace Blacksmith.Infrastructure.Extensions
     {
         public static IQueryable<Item> Sort(this IQueryable<Item> query, string orderBy)
         {
-            if (orderBy == String.Empty) return query.OrderBy(i => i.Name);
+            if (orderBy == String.Empty || orderBy == "") return query.OrderBy(i => i.Name);
 
             switch (orderBy)
             {

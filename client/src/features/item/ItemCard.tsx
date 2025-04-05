@@ -19,7 +19,7 @@ export default function ItemCard({ item }: Props) {
                 sx={{
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
+                    justifyContent: "space-around",
                     minWidth: 250,
                     maxWidth: 230,
                     height: 350,
@@ -33,35 +33,40 @@ export default function ItemCard({ item }: Props) {
                 }}
             >
                 <CardActionArea onClick={() => handleClickCard(item.itemId)}>
-                    <CardContent sx={{ textAlign: "center", pb: 0 }}>
+                    <CardContent sx={{ textAlign: "center", p: 0 }}>
+
                         <Typography
-                            variant="h6"
                             sx={{
                                 fontFamily: "'MedievalSharp', cursive",
                                 color: "rgb(239, 209, 120)",
                                 textShadow: "2px 2px 8px rgba(255, 255, 255, 0.3)",
+                                fontSize: item.name.length > 20 ? "16px" : "20px"
                             }}
                         >
                             {item.name}
                         </Typography>
+
                         <Box component="img"
                             src={item.imageUrl}
                             alt={item.name}
-                            sx={{ width: "230px", height: "auto", maxHeight: "200px" }}
+                            sx={{ width: "230px", height: "auto", maxHeight: "150px" }}
                         />
+
                         <Box sx={{ display: "flex", justifyContent: "center", alignContent: "flex-end" }}>
                             <Typography
                                 variant="h6"
                                 sx={{
                                     color: "white",
-                                    fontFamily: "'Astloch', cursive"
+                                    fontFamily: "'Quintessential', cursive"
                                 }}
                             >
                                 £{item.price}
                             </Typography>
                         </Box>
+
                     </CardContent>
                 </CardActionArea>
+
                 <CardActions sx={{ display: "flex", flexDirection: "column", p: 0 }}>
                     <Rating max={5} value={item.rating} readOnly sx={{ mb: 1 }} />
                     <Button

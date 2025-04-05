@@ -1,9 +1,10 @@
 import { Container, FormControl, Grid2, LinearProgress, MenuItem, Pagination, Select } from "@mui/material";
 import ItemCard from "../item/ItemCard";
 import { Item } from "../../App/models/Item";
-import { useGetAllItemsQuery } from "../../App/state/items/itemApiSlice";
-import { useState } from "react";
+import { useGetAllItemsQuery } from "../../App/state/items/itemsApi";
 import { PaginatedList } from "../../App/models/PaginatedList";
+import { useAppDispatch, useAppSelector } from "../../App/state/store";
+import { setItemsParams } from "../../App/state/items/itemsSlice";
 
 interface ItemsQuery {
     data?: PaginatedList,
@@ -12,24 +13,9 @@ interface ItemsQuery {
 
 export default function Inventory() {
 
-    const initSearchParams = { currentPageNumber: "1", itemsOnPage: "12" };
-    const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams(initSearchParams));
-    const [sort, setSort] = useState<string>("alphaAsc");
-    const { data, isLoading }: ItemsQuery = useGetAllItemsQuery(searchParams?.toString());
-
-    const handlePageClick = (event: React.ChangeEvent<unknown>, value: number) => {
-        const params = new URLSearchParams();
-        params.append("currentPageNumber", value.toString());
-        params.append("itemsOnPage", "12");
-        setSearchParams(params);
-    };
-
-    const handleSelectSort = (value: string) => {
-        const params = searchParams;
-        params.append("orderBy", value);
-        setSort(value);
-        setSearchParams(params);
-    };
+    const dispatch = useAppDispatch();
+    const { itemsParams } = useAppSelector(store => store.items);
+    const { data, isLoading }: ItemsQuery = useGetAllItemsQuery(itemsParams);
 
     const sortOptions = [
         { title: "Price: Low - High", value: "priceAsc" },
@@ -40,10 +26,10 @@ export default function Inventory() {
         { title: "Rating: High - Low", value: "ratingDesc" }
     ];
 
-    if (isLoading) return <LinearProgress color="inherit" />
+    if (isLoading || !data) return <LinearProgress color="inherit" />
 
     return (
-        <Container sx={{ display: "flex", flexDirection: "column", mx: "auto" }}>
+        <Container sx={{ display: "flex", flexDirection: "column" }}>
 
             <Grid2 container spacing={2} columns={2} sx={{ my: 2 }}>
 
@@ -53,9 +39,9 @@ export default function Inventory() {
                             labelId="sort-select-label"
                             id="sort-select"
                             variant="outlined"
-                            value={sort}
+                            value={itemsParams.OrderBy}
                             label="Sort"
-                            onChange={(event) => handleSelectSort(event.target.value as string)}
+                            onChange={(event) => dispatch(setItemsParams({ OrderBy: event.target.value }))}
                             size="small"
                             sx={{
                                 backgroundColor: "darkkhaki",
@@ -65,7 +51,14 @@ export default function Inventory() {
                                 }
                             }}
                         >
-                            {sortOptions.map(option => <MenuItem key={option.value} value={option.value}>{option.title}</MenuItem>)}
+                            {sortOptions.map(option =>
+                                <MenuItem
+                                    key={option.value}
+                                    value={option.value}
+                                >
+                                    {option.title}
+                                </MenuItem>
+                            )}
                         </Select>
                     </FormControl>
                 </Grid2>
@@ -87,8 +80,8 @@ export default function Inventory() {
                             },
                         }}
                         count={data?.totalPages}
-                        page={data?.currentPageNumber}
-                        onChange={(event, value) => handlePageClick(event, value)}
+                        page={itemsParams.CurrentPageNumber}
+                        onChange={(event, value) => dispatch(setItemsParams({ CurrentPageNumber: value }))}
                     />
                 </Grid2>
 
@@ -96,7 +89,7 @@ export default function Inventory() {
 
             <Grid2 container spacing={2} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} sx={{ m: 0 }}>
                 {data?.items.map((item: Item) =>
-                    <Grid2 size={1}>
+                    <Grid2 size={1} key={item.itemId}>
                         <ItemCard
                             key={item.itemId}
                             item={item}
@@ -106,10 +99,10 @@ export default function Inventory() {
 
             </Grid2 >
 
+
             <Grid2 container sx={{ my: 5 }} columns={3}>
 
                 <Grid2 size={1}></Grid2>
-
                 <Grid2 size={1}></Grid2>
 
                 <Grid2 size={1} display={"flex"} justifyContent={"flex-end"}>
@@ -129,8 +122,8 @@ export default function Inventory() {
                             },
                         }}
                         count={data?.totalPages}
-                        page={data?.currentPageNumber}
-                        onChange={(event, value) => handlePageClick(event, value)}
+                        page={itemsParams.CurrentPageNumber}
+                        onChange={(event, value) => dispatch(setItemsParams({ CurrentPageNumber: value }))}
                     />
                 </Grid2>
 

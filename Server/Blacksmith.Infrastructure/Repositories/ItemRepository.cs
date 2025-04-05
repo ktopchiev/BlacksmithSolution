@@ -33,9 +33,9 @@ namespace Blacksmith.Infrastructure.Repositories
         public async Task<PaginatedList<ItemResponse>> GetAllItemsAsync(ItemParams itemParams)
         {
             var itemList = await _db.Items
+                .Sort(itemParams.OrderBy!)
                 .Skip((itemParams.ItemsOnPage * itemParams.CurrentPageNumber) - itemParams.ItemsOnPage)
                 .Take(itemParams.ItemsOnPage)
-                .Sort(itemParams.OrderBy!)
                 .Select(i => i.ToItemResponse())
                 .ToListAsync();
 
