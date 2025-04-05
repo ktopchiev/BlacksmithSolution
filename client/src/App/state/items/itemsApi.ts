@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Item } from "../../models/Item";
 import { PaginatedList } from "../../models/PaginatedList";
 import SearchParams from "../../models/SearchParams";
+import ItemFilters from "../../models/ItemFilters";
 
 export const itemsApi = createApi({
     reducerPath: "itemsApi",
@@ -26,6 +27,12 @@ export const itemsApi = createApi({
                 providesTags: ['Items']
             }),
 
+            getItemFilters: builder.query<ItemFilters, void>({
+                query: () => {
+                    return `/items/filters`;
+                }
+            }),
+
             addItem: builder.mutation({
                 query: (item) => ({
                     url: "/items",
@@ -38,4 +45,4 @@ export const itemsApi = createApi({
     }
 });
 
-export const { useGetAllItemsQuery, useGetItemByIdQuery, useAddItemMutation } = itemsApi;
+export const { useGetAllItemsQuery, useGetItemByIdQuery, useAddItemMutation, useGetItemFiltersQuery } = itemsApi;
