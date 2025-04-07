@@ -20,7 +20,8 @@ export default function ItemsFilter({ title, data }: Props) {
                     </AccordionSummary>
                     <AccordionDetails>
                         <FormGroup>
-                            {data?.map(item => <FormControlLabel control={<Checkbox />} label={item} />)}
+                            {data?.map(item =>
+                                <FormControlLabel control={<Checkbox />} label={item} />)}
                         </FormGroup>
                     </AccordionDetails>
                 </Accordion>

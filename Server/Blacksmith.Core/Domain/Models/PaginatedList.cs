@@ -9,7 +9,7 @@ namespace Blacksmith.Core.Domain.Models
             ItemsCount = itemsCount;
             ItemsOnPage = itemsOnPage;
             CurrentPageNumber = currentPageNumber;
-            TotalPages = (int)Math.Ceiling((double)itemsCount / itemsOnPage);
+            TotalPages = items.Count >= itemsOnPage ? (int)Math.Ceiling((double)itemsCount / itemsOnPage) : 1;
             Items.AddRange(items);
         }
 

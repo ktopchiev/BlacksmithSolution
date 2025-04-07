@@ -35,5 +35,16 @@ namespace Blacksmith.Infrastructure.Extensions
 
             return query;
         }
+
+        public static IQueryable<Item> Filter(this IQueryable<Item> query, string color, string material, double? rating)
+        {
+            if (color != null) query = query.Where(i => i.Color == color);
+
+            if (material != null) query = query.Where(i => i.Material == material);
+
+            if (rating != null) query = query.Where(i => i.Rating == rating);
+
+            return query;
+        }
     }
 }

@@ -16,11 +16,10 @@ interface ItemsQuery {
 export default function Inventory() {
 
     const { itemsParams } = useAppSelector(store => store.items);
-    const { data, isLoading }: ItemsQuery = useGetAllItemsQuery(itemsParams);
+    const { data: items, isLoading }: ItemsQuery = useGetAllItemsQuery(itemsParams);
     const { data: filters } = useGetItemFiltersQuery();
 
-
-    if (isLoading || !data) return <LinearProgress color="inherit" />
+    if (isLoading || !items) return <LinearProgress color="inherit" />
 
     return (
 
@@ -38,11 +37,11 @@ export default function Inventory() {
 
                         <Grid2 sx={{ display: "flex", justifyContent: "space-between" }}>
                             <SortSelect orderBy={itemsParams.OrderBy} />
-                            <ItemsPagination totalPages={data.totalPages} currentPageNumber={itemsParams.CurrentPageNumber} />
+                            <ItemsPagination totalPages={items.totalPages} currentPageNumber={itemsParams.CurrentPageNumber} />
                         </Grid2>
 
                         <Grid2 container spacing={2} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} sx={{ m: 0 }}>
-                            {data?.items.map((item: Item) =>
+                            {items?.items.map((item: Item) =>
                                 <Grid2 size={1} key={item.itemId}>
                                     <ItemCard
                                         key={item.itemId}
@@ -53,7 +52,7 @@ export default function Inventory() {
                         </Grid2 >
 
                         <Grid2 size={12} sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
-                            <ItemsPagination totalPages={data.totalPages} currentPageNumber={itemsParams.CurrentPageNumber} />
+                            <ItemsPagination totalPages={items.totalPages} currentPageNumber={itemsParams.CurrentPageNumber} />
                         </Grid2>
                     </Grid2>
                 </Grid2>
