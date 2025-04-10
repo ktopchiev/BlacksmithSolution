@@ -9,38 +9,47 @@ namespace Blacksmith.Infrastructure.Extensions
         {
             if (orderBy == String.Empty || orderBy == "") return query.OrderBy(i => i.Name);
 
-            switch (orderBy)
+            query = orderBy switch
             {
-                case "priceAsc":
-                    query = query.OrderBy(i => i.Price);
-                    break;
-                case "priceDesc":
-                    query = query.OrderByDescending(i => i.Price);
-                    break;
-                case "alphaAsc":
-                    query = query.OrderBy(i => i.Name);
-                    break;
-                case "alphaDesc":
-                    query = query.OrderByDescending(i => i.Name);
-                    break;
-                case "ratingAsc":
-                    query = query.OrderBy(i => i.Rating);
-                    break;
-                case "ratingDesc":
-                    query = query.OrderByDescending(i => i.Rating);
-                    break;
-                default:
-                    break;
-            }
+                "priceAsc" => query.OrderBy(i => i.Price),
+                "priceDesc" => query.OrderByDescending(i => i.Price),
+                "alphaAsc" => query.OrderBy(i => i.Name),
+                "alphaDesc" => query.OrderByDescending(i => i.Name),
+                "ratingAsc" => query.OrderBy(i => i.Rating),
+                "ratingDesc" => query.OrderByDescending(i => i.Rating),
+                _=> query.OrderBy(i=>i.Name)
+            };
 
             return query;
         }
 
-        public static IQueryable<Item> Filter(this IQueryable<Item> query, string color, string material, double? rating)
+        public static IQueryable<Item> Filter(this IQueryable<Item> query, string? category, string? color, string? material, double? rating)
         {
-            if (color != null) query = query.Where(i => i.Color == color);
+            
+            if(!String.IsNullOrEmpty(category))
+            {
+                List<string> categoryList = category.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                    .Select(c => c.ToLower())
+                    .ToList();
+                query = query.Where(c => categoryList.Contains(c.Category!.ToLower()));
+            }
 
-            if (material != null) query = query.Where(i => i.Material == material);
+            if(!String.IsNullOrEmpty(color))
+            {
+                List<string> colorList= color.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                    .Select(c => c.ToLower())
+                    .ToList();
+
+                query = query.Where(c => colorList.Contains(c.Color!.ToLower()));
+            }
+
+            if(!String.IsNullOrEmpty(material))
+            {
+                List<string> materialList = material.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                    .Select(c => c.ToLower())
+                    .ToList();
+                query = query.Where(c => materialList.Contains(c.Material!.ToLower()));
+            }
 
             if (rating != null) query = query.Where(i => i.Rating == rating);
 

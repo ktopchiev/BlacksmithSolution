@@ -33,7 +33,7 @@ namespace Blacksmith.Infrastructure.Repositories
         public async Task<PaginatedList<ItemResponse>> GetAllItemsAsync(ItemParams itemParams)
         {
             var itemList = await _db.Items
-                .Filter(itemParams.Color, itemParams.Material, itemParams.Rating)
+                .Filter(itemParams.Category, itemParams.Color, itemParams.Material, itemParams.Rating)
                 .Sort(itemParams.OrderBy!)
                 .Skip((itemParams.ItemsOnPage * itemParams.CurrentPageNumber) - itemParams.ItemsOnPage)
                 .Take(itemParams.ItemsOnPage)
@@ -83,7 +83,7 @@ namespace Blacksmith.Infrastructure.Repositories
         {
             List<Item> items = await _db.Items.ToListAsync();
 
-            if (items == null) return null;
+            if (items == null) return null!;
 
             return new ItemFilters()
             {
