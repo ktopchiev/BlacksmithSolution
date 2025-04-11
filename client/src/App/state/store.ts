@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { itemsApi } from "./items/itemsApi";
-import { rtkQueryErrorLogger } from "./middleware/errorLoggerMiddleware";
+import { rtkQueryErrorLogger } from "./middleware/rtkQueryErrorLogger";
 import { itemsSlice } from "./items/itemsSlice";
 import { useDispatch, useSelector } from "react-redux";
 

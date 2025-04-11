@@ -3,7 +3,7 @@ import { setSearchParams } from '../../../App/state/items/itemsSlice'
 import { useAppDispatch } from '../../../App/state/store';
 
 interface Props {
-    totalPages: number;
+    totalPages?: number;
     currentPageNumber: number;
 }
 
