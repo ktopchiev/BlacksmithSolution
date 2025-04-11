@@ -4,6 +4,7 @@ using Blacksmith.Core.Domain.Helpers;
 using Blacksmith.Core.Domain.Models;
 using Blacksmith.Core.Domain.RepositoryContracts;
 using Blacksmith.Infrastructure.BlacksmithDbContext;
+using Blacksmith.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blacksmith.Infrastructure.Repositories
@@ -32,9 +33,10 @@ namespace Blacksmith.Infrastructure.Repositories
         public async Task<PaginatedList<ItemResponse>> GetAllItemsAsync(ItemParams itemParams)
         {
             var itemList = await _db.Items
+                .Filter(itemParams.Category, itemParams.Color, itemParams.Material, itemParams.Rating)
+                .Sort(itemParams.OrderBy!)
                 .Skip((itemParams.ItemsOnPage * itemParams.CurrentPageNumber) - itemParams.ItemsOnPage)
                 .Take(itemParams.ItemsOnPage)
-                .OrderBy(i => i.Name)
                 .Select(i => i.ToItemResponse())
                 .ToListAsync();
 
@@ -75,6 +77,32 @@ namespace Blacksmith.Infrastructure.Repositories
             await _db.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<ItemFilters> GetItemFiltersAsync()
+        {
+            List<Item> items = await _db.Items.ToListAsync();
+
+            if (items == null) return null!;
+
+            return new ItemFilters()
+            {
+                Categories = items.Where(i => i.Category != "")
+                    .Select(i => i.Category)
+                    .Distinct()
+                    .Order()
+                    .ToList()!,
+                Colors = items.Where(i => i.Color != "")
+                    .Select(i => i.Color)
+                    .Distinct()
+                    .Order()
+                    .ToList()!,
+                Materials = items.Where(i => i.Material != "")
+                    .Select(i => i.Material)
+                    .Distinct()
+                    .Order()
+                    .ToList()!,
+            };
         }
     }
 }

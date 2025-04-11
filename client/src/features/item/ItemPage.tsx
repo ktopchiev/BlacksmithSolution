@@ -1,5 +1,5 @@
 import { Box, Container, Grid2, LinearProgress, Rating, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import { useGetItemByIdQuery } from "../../state/items/itemApiSlice";
+import { useGetItemByIdQuery } from "../../App/state/items/itemsApi";
 import { useParams } from "react-router";
 
 export default function ItemPage() {
@@ -7,7 +7,7 @@ export default function ItemPage() {
     const { itemId } = useParams();
     const { data: item, isLoading } = useGetItemByIdQuery(itemId!);
 
-    if (isLoading) return <LinearProgress color="inherit" />
+    if (isLoading || !item) return <LinearProgress color="inherit" />
 
     return (
         <Container>

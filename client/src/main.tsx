@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import './index.css'
-import App from './layout/App.tsx'
+import App from './App/layout/App.tsx'
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -13,7 +13,7 @@ import AboutPage from './features/AboutPage.tsx';
 import ContactsPage from './features/ContactsPage.tsx';
 import ItemPage from './features/item/ItemPage.tsx';
 import { Provider } from 'react-redux';
-import { store } from './state/store.ts';
+import { store } from './App/state/store.ts';
 import 'react-toastify/dist/ReactToastify.css';
 
 

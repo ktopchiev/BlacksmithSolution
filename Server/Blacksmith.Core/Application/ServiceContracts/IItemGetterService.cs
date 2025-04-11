@@ -8,5 +8,6 @@ namespace Blacksmith.Core.Application.ServiceContracts
     {
         Task<PaginatedList<ItemResponse>?> GetAllItemsAsync(ItemParams itemParams);
         Task<ItemResponse?> GetItemByIdAsync(Guid itemId);
+        Task<ItemFilters> GetItemFiltersAsync();
     }
 }
