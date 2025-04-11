@@ -4,6 +4,7 @@ import { PaginatedList } from "../../models/PaginatedList";
 import SearchParams from "../../models/SearchParams";
 import ItemFilters from "../../models/ItemFilters";
 
+
 export const itemsApi = createApi({
     reducerPath: "itemsApi",
     baseQuery: fetchBaseQuery({
@@ -14,10 +15,16 @@ export const itemsApi = createApi({
         return {
             getAllItems: builder.query<PaginatedList, SearchParams | null>({
                 query: (params) => {
-                    const currentPage = params?.CurrentPageNumber;
-                    const itemsOnPage = params?.ItemsOnPage;
-                    const orderBy = params?.OrderBy;
-                    return `items?CurrentPageNumber=${currentPage}&ItemsOnPage=${itemsOnPage}&OrderBy=${orderBy}`;
+
+                    const searchParams = new URLSearchParams();
+
+                    Object.entries(params!).forEach(([key, value]) => {
+                        if (value !== undefined && value !== null && value !== '') {
+                            searchParams.append(key, value.toString());
+                        }
+                    });
+
+                    return `items?${searchParams.toString()}`;
                 },
                 providesTags: ['Items']
             }),
