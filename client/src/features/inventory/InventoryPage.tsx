@@ -15,8 +15,8 @@ interface ItemsQuery {
 
 export default function Inventory() {
 
-    const { itemsParams } = useAppSelector(store => store.items);
-    const { data: items, isLoading }: ItemsQuery = useGetAllItemsQuery(itemsParams);
+    const { searchParams } = useAppSelector(store => store.items);
+    const { data: items, isLoading }: ItemsQuery = useGetAllItemsQuery(searchParams);
     const { data: filters } = useGetItemFiltersQuery();
 
     if (isLoading || !items) return <LinearProgress color="inherit" />
@@ -27,17 +27,17 @@ export default function Inventory() {
             <Grid2 container spacing={2} sx={{ m: 0, p: 0 }}>
 
                 <Grid2 size={2} sx={{ display: "block", mt: "55px" }}>
-                    <ItemsFilter title={"Category"} data={filters?.categories} />
-                    <ItemsFilter title={"Materials"} data={filters?.materials} />
-                    <ItemsFilter title={"Colors"} data={filters?.colors} />
+                    <ItemsFilter title={"Category"} options={filters?.categories} />
+                    <ItemsFilter title={"Materials"} options={filters?.materials} />
+                    <ItemsFilter title={"Colors"} options={filters?.colors} />
                 </Grid2>
 
                 <Grid2 size={10}>
                     <Grid2 container spacing={2} direction={"column"} sx={{ m: 0 }}>
 
                         <Grid2 sx={{ display: "flex", justifyContent: "space-between" }}>
-                            <SortSelect orderBy={itemsParams.OrderBy} />
-                            <ItemsPagination totalPages={items.totalPages} currentPageNumber={itemsParams.CurrentPageNumber} />
+                            <SortSelect orderBy={searchParams.OrderBy} />
+                            <ItemsPagination totalPages={items.totalPages} currentPageNumber={searchParams.CurrentPageNumber} />
                         </Grid2>
 
                         <Grid2 container spacing={2} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} sx={{ m: 0 }}>
@@ -52,7 +52,7 @@ export default function Inventory() {
                         </Grid2 >
 
                         <Grid2 size={12} sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
-                            <ItemsPagination totalPages={items.totalPages} currentPageNumber={itemsParams.CurrentPageNumber} />
+                            <ItemsPagination totalPages={items.totalPages} currentPageNumber={searchParams.CurrentPageNumber} />
                         </Grid2>
                     </Grid2>
                 </Grid2>

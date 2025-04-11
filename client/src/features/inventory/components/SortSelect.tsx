@@ -1,5 +1,5 @@
 import { FormControl, MenuItem, Select } from '@mui/material'
-import { setItemsParams } from '../../../App/state/items/itemsSlice'
+import { setSearchParams } from '../../../App/state/items/itemsSlice'
 import { useAppDispatch } from '../../../App/state/store';
 
 interface Props {
@@ -26,7 +26,7 @@ function SortSelect({ orderBy }: Props) {
                 variant="outlined"
                 value={orderBy}
                 label="Sort"
-                onChange={(event) => dispatch(setItemsParams({ OrderBy: event.target.value }))}
+                onChange={(event) => dispatch(setSearchParams({ OrderBy: event.target.value }))}
                 size="small"
                 sx={{
                     backgroundColor: "rgb(239, 209, 120)",

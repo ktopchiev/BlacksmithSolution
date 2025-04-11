@@ -1,5 +1,5 @@
 import { Pagination } from '@mui/material'
-import { setItemsParams } from '../../../App/state/items/itemsSlice'
+import { setSearchParams } from '../../../App/state/items/itemsSlice'
 import { useAppDispatch } from '../../../App/state/store';
 
 interface Props {
@@ -28,7 +28,7 @@ function ItemsPagination({ totalPages, currentPageNumber }: Props) {
             }}
             count={totalPages}
             page={currentPageNumber}
-            onChange={(event, value) => dispatch(setItemsParams({ CurrentPageNumber: value }))}
+            onChange={(event, value) => dispatch(setSearchParams({ CurrentPageNumber: value }))}
         />
     )
 }

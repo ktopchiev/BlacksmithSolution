@@ -5,20 +5,23 @@ function initParams(): SearchParams {
     return {
         CurrentPageNumber: 1,
         ItemsOnPage: 12,
-        OrderBy: "alphaAsc"
+        OrderBy: "alphaAsc",
+        Category: "",
+        Material: "",
+        Color: "",
     }
 }
 
 export const itemsSlice = createSlice({
     name: "items",
     initialState: {
-        itemsParams: initParams(),
+        searchParams: initParams(),
     },
     reducers: {
-        setItemsParams: (state, action: PayloadAction<Partial<SearchParams>>) => {
-            state.itemsParams = { ...state.itemsParams, ...action.payload };
+        setSearchParams: (state, action: PayloadAction<Partial<SearchParams>>) => {
+            state.searchParams = { ...state.searchParams, ...action.payload };
         }
     },
 });
 
-export const { setItemsParams } = itemsSlice.actions
+export const { setSearchParams } = itemsSlice.actions
