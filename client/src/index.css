@@ -15,6 +15,10 @@ html {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+body {
+	margin: 0;
+}
+
 .active {
 	color: rgb(239, 209, 120);
 	text-shadow: rgb(239, 209, 120) 1px 0 10px;

@@ -15,6 +15,7 @@ import ItemPage from './features/item/ItemPage.tsx';
 import { Provider } from 'react-redux';
 import { store } from './App/state/store.ts';
 import 'react-toastify/dist/ReactToastify.css';
+import NotFoundPage from './features/NotFoundPage.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')!).render(
 						</Route>
 						<Route path="about" element={<AboutPage />} />
 						<Route path="contacts" element={<ContactsPage />} />
+						<Route path="*" element={<NotFoundPage />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

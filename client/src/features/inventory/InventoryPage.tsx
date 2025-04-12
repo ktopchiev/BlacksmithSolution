@@ -24,7 +24,7 @@ export default function InventoryPage() {
     return (
 
         <>
-            <Grid2 container spacing={2} sx={{ m: 0, p: 0 }}>
+            <Grid2 container spacing={2} sx={{ m: 2, p: 0 }}>
 
                 <Grid2 size={2} sx={{ display: "block", mt: "55px" }}>
                     <ItemsFilter type={"Category"} options={filters?.categories} />
