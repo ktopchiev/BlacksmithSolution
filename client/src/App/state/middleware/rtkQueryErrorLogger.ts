@@ -19,13 +19,14 @@ export const rtkQueryErrorLogger: Middleware =
 
             switch (errorPayload.status) {
                 case 404:
-                    toast.warning('Not Found', { position: "top-center" })
+                    toast.warning('Not Found', { position: "bottom-right" })
+
                     break;
                 case 400:
-                    toast.error('Bad Request', { position: "top-center" })
+                    toast.error('Bad Request', { position: "bottom-right" })
                     break;
                 case 500:
-                    toast.error('Internal Server Error', { position: "top-center" })
+                    toast.error('Internal Server Error', { position: "bottom-right" })
                     break;
                 default:
                     break;
