@@ -1,6 +1,7 @@
-import { Card, CardContent, Typography, Box, CardActions, Button, Paper, CardActionArea, Rating } from "@mui/material";
+import { Card, CardContent, Typography, Box, CardActions, Button, Paper, CardActionArea, Rating, Skeleton } from "@mui/material";
 import { Item } from "../../App/models/Item";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 interface Props {
     item: Item
@@ -8,9 +9,14 @@ interface Props {
 
 export default function ItemCard({ item }: Props) {
     const navigate = useNavigate();
+    const [imageIsLoaded, setImageIsLoaded] = useState<boolean>(false);
 
     function handleClickCard(itemId: string) {
         navigate(itemId);
+    }
+
+    const handleImageLoad = () => {
+        setImageIsLoaded(true);
     }
 
     return (
@@ -45,11 +51,15 @@ export default function ItemCard({ item }: Props) {
                         >
                             {item.name}
                         </Typography>
-
+                        {!imageIsLoaded &&
+                            <Skeleton variant="rectangular" width={230} height={150} />
+                        }
                         <Box component="img"
                             src={item.imageUrl}
                             alt={item.name}
                             sx={{ width: "230px", height: "auto", maxHeight: "150px" }}
+                            onLoad={handleImageLoad}
+                            style={{ visibility: imageIsLoaded ? 'visible' : 'hidden' }}
                         />
 
                         <Box sx={{ display: "flex", justifyContent: "center", alignContent: "flex-end" }}>

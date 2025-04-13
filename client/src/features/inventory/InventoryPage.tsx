@@ -42,6 +42,7 @@ export default function InventoryPage() {
 
                         <Grid2 container spacing={2} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} sx={{ m: 0 }}>
                             {items?.items.map((item: Item) =>
+
                                 <Grid2 size={1} key={item.itemId}>
                                     <ItemCard
                                         key={item.itemId}
