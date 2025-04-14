@@ -23,6 +23,9 @@ namespace Blacksmith.UI.Controllers
         public async Task<ActionResult<PaginatedList<ItemResponse>>> GetAllItemsAsync([FromQuery] ItemParams itemParams)
         {
             var paginatedItemList = await _itemGetterService.GetAllItemsAsync(itemParams);
+
+            if (paginatedItemList == null) return NoContent();
+
             return Ok(paginatedItemList);
         }
 
