@@ -8,9 +8,8 @@ using Blacksmith.UI.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Blacksmith.Core.Application.ServiceContracts.User;
+using Blacksmith.Core.Application.Services.User;
 
 namespace Blacksmith.UI
 {
@@ -29,6 +28,8 @@ namespace Blacksmith.UI
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
             builder.Services.AddScoped<IItemAdderService, ItemAdderService>();
             builder.Services.AddScoped<IItemGetterService, ItemGetterService>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
                 {
