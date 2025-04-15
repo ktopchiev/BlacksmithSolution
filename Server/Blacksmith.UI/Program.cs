@@ -7,6 +7,10 @@ using Blacksmith.Infrastructure.Repositories;
 using Blacksmith.UI.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Blacksmith.UI
 {
@@ -32,7 +36,12 @@ namespace Blacksmith.UI
                 }
             );
 
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddEntityFrameworkStores<ApplicationDbContext>();
+
             builder.Services.AddCors();
+
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -46,12 +55,12 @@ namespace Blacksmith.UI
                 app.MapScalarApiReference();
             }
 
-
             app.UseCors(opt =>
             {
                 opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:5173");
             });
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
@@ -59,11 +68,13 @@ namespace Blacksmith.UI
             var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             try
             {
                 await context.Database.MigrateAsync();
-                await DbInitializer.Initialize(context);
+                await DbInitializer.Initialize(context, userManager, roleManager);
             }
             catch (Exception ex)
             {

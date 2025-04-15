@@ -1,3 +1,9 @@
 {
-    "dotnet.defaultSolution": "Blacksmith.sln"
+    "dotnet.defaultSolution": "Blacksmith.sln",
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    }
 }

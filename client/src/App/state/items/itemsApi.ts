@@ -4,11 +4,10 @@ import { PaginatedList } from "../../models/PaginatedList";
 import SearchParams from "../../models/SearchParams";
 import ItemFilters from "../../models/ItemFilters";
 
-
 export const itemsApi = createApi({
     reducerPath: "itemsApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5146/api",
+        baseUrl: import.meta.env.REACT_APP_API_URL,
     }),
     tagTypes: ['Items'],
     endpoints: (builder) => {

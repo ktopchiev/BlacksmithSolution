@@ -1,13 +1,36 @@
 ﻿using Blacksmith.Core.Domain.Entities;
+using Blacksmith.Core.Domain.Models;
 using Blacksmith.Infrastructure.BlacksmithDbContext;
+using Microsoft.AspNetCore.Identity;
 
 namespace Blacksmith.Infrastructure
 {
     public static class DbInitializer
     {
-        public static async Task Initialize(ApplicationDbContext db)
+        public static async Task Initialize(ApplicationDbContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (db == null) throw new ArgumentNullException(nameof(db));
+
+            if (!db.UserRoles.Any())
+            {
+                string[] roles = { "Admin", "User" };
+                foreach (var role in roles)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+
+            if (!db.Users.Any())
+            {
+                var admin = new IdentityUser { UserName = "admin", Email = "admin@test.com" };
+                var user = new IdentityUser { UserName = "koko", Email = "koko@test.com" };
+
+                await userManager.CreateAsync(admin, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(admin, ["Admin", "User"]);
+
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(user, ["User"]);
+            }
 
             if (db.Items.Any()) return;
 
