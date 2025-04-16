@@ -7,7 +7,7 @@ import ItemFilters from "../../models/ItemFilters";
 export const itemsApi = createApi({
     reducerPath: "itemsApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.REACT_APP_API_URL,
+        baseUrl: import.meta.env.VITE_APP_API_URL,
     }),
     tagTypes: ['Items'],
     endpoints: (builder) => {
