@@ -13,9 +13,14 @@ namespace Blacksmith.Infrastructure.Repositories
             _userManager = userManager;
         }
 
-        public Task<List<IdentityUser>> GetUsersAsync()
+        public async Task<List<IdentityUser>> GetUsersAsync()
         {
-            return _userManager.Users.ToListAsync();
+            return await _userManager.Users.ToListAsync();
+        }
+
+        public async Task<IList<string>> GetUserRolesAsync(IdentityUser user)
+        {
+            return await _userManager.GetRolesAsync(user);
         }
     }
 }
