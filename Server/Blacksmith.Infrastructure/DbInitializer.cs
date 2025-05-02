@@ -7,7 +7,7 @@ namespace Blacksmith.Infrastructure
 {
     public static class DbInitializer
     {
-        public static async Task Initialize(ApplicationDbContext db, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task Initialize(ApplicationDbContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (db == null) throw new ArgumentNullException(nameof(db));
 
@@ -22,8 +22,8 @@ namespace Blacksmith.Infrastructure
 
             if (!db.Users.Any())
             {
-                var admin = new User { UserName = "admin", Email = "admin@test.com" };
-                var user = new User { UserName = "koko", Email = "koko@test.com" };
+                var admin = new IdentityUser { UserName = "admin", Email = "admin@test.com" };
+                var user = new IdentityUser { UserName = "koko", Email = "koko@test.com" };
 
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
                 await userManager.AddToRolesAsync(admin, ["Admin", "User"]);

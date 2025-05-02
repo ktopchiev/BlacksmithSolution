@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Blacksmith.Core.Application.DTOs;
 using Blacksmith.Core.Application.ServiceContracts.User;
 using Blacksmith.Core.Domain.Models;
 using Blacksmith.Core.Domain.RepositoryContracts;
@@ -25,8 +26,8 @@ namespace Blacksmith.Core.Application.Services.User
 
         public async Task<string> Login(LoginModel userLogin)
         {
-
             var users = await _userRepository.GetUsersAsync();
+
             var user = users.Find(u => u.UserName == userLogin.UserName);
 
             if (user == null) return string.Empty;
@@ -74,6 +75,27 @@ namespace Blacksmith.Core.Application.Services.User
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<string> Register(UserAddRequest userAddRequest)
+        {
+            if (userAddRequest == null) return string.Empty;
+
+            var users = await _userRepository.GetUsersAsync();
+
+            var user = users.Find(u => u.UserName == userAddRequest.UserName);
+
+            if (user != null) return string.Empty;
+
+            user = userAddRequest.ToUser();
+
+            var result = await _userRepository.AddNewUserAsync(user, userAddRequest.Password);
+
+            if (!result.ToString().Contains("Succeed")) return string.Empty;
+
+            await _userManager.AddToRoleAsync(user, "User");
+
+            return result.ToString();
         }
     }
 }

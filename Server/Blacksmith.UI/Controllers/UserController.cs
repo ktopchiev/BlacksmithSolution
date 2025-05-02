@@ -26,8 +26,8 @@ namespace Blacksmith.UI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginModel userLogin)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.Select(x => x.Value!.Errors)
-                                                                    .Where(y => y.Count > 0)
-                                                                    .ToList());
+                .Where(y => y.Count > 0)
+                .ToList());
 
             var token = await _userService.Login(userLogin);
 
@@ -60,6 +60,23 @@ namespace Blacksmith.UI.Controllers
             };
 
             return Ok(userResponse);
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult> Register(UserAddRequest userAddRequest)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState.Select(x => x.Value!.Errors)
+                .Where(y => y.Count > 0)
+                .ToList());
+
+            if (userAddRequest.UserName == "" || userAddRequest.Email == "") return BadRequest("Username and Email cannot be empty!");
+
+            var result = await _userService.Register(userAddRequest);
+
+            if (!result.Contains("Succeed") || string.IsNullOrEmpty(result)) return BadRequest();
+
+            return Ok(result);
+
         }
     }
 }

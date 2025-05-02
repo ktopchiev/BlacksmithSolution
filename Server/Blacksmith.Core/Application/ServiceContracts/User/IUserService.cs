@@ -1,3 +1,4 @@
+using Blacksmith.Core.Application.DTOs;
 using Blacksmith.Core.Domain.Models;
 
 namespace Blacksmith.Core.Application.ServiceContracts.User
@@ -6,5 +7,6 @@ namespace Blacksmith.Core.Application.ServiceContracts.User
     {
         Task<string> Login(LoginModel userLogin);
         Task<string> GetCurrentUserAsync(string userName);
+        Task<string> Register(UserAddRequest userAddRequest);
     }
 }
