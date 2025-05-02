@@ -1,7 +1,13 @@
-import { AppBar, Box, Link, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Link, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router";
+import { useAppDispatch, useAppSelector } from "../state/store";
+import { useState } from "react";
+import { setLogOut } from "../state/user/userSlice";
 
 export default function Header() {
+
+    const { loggedIn, user } = useAppSelector(state => state.user);
+    const dispatch = useAppDispatch();
 
     const navLinks = [
         { title: "Inventory", path: "/inventory" },
@@ -10,10 +16,18 @@ export default function Header() {
     ]
 
     const userNavLinks = [
-        { title: "Bag", path: "/bag" },
         { title: "Login", path: "/login" },
         { title: "Register", path: "/register" },
     ]
+
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <AppBar
@@ -50,20 +64,67 @@ export default function Header() {
                 display: "flex",
             }}>
                 {navLinks.map(link =>
-                    <Typography key={link.path} sx={{ fontFamily: "'MedievalSharp',  cursive", color: "white", fontSize: "25px", px: 1 }}>
+                    <Typography key={link.path}
+                        sx={{
+                            fontFamily: "'MedievalSharp',  cursive",
+                            color: "white",
+                            fontSize: "25px",
+                            px: 1
+                        }}>
                         <NavLink
                             to={link.path}
                             className={({ isActive, isPending }) =>
-                                isPending ? "pending" : isActive ? "active" : ""
+                                isPending ? "pending" : isActive ? "active" : "navLink"
                             }
                         >
                             {link.title}
                         </NavLink>
                     </Typography>)}
             </Box>
-            <Box sx={{ display: "flex", fontSize: "25px" }}>
-                {userNavLinks.map(link => <NavLink key={link.path} to={link.path}>{link.title}</NavLink>)}
+
+            <Box sx={{ display: "flex", mx: 2 }}>
+
+                {loggedIn ?
+                    <>
+                        <Button
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                        >
+                            <Typography sx={{ fontFamily: "'MedievalSharp',  cursive", color: "white" }}>
+                                {user?.userName}
+                            </Typography>
+                        </Button>
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                            <MenuItem onClick={() => dispatch(setLogOut())}>Logout</MenuItem>
+                        </Menu>
+                    </> :
+                    userNavLinks.map(link =>
+                        <Typography sx={{
+                            fontSize: "25px",
+                            fontFamily: "'MedievalSharp',  cursive",
+                            px: 1
+                        }}>
+                            <NavLink
+                                className={"navLink"}
+                                key={link.path}
+                                to={link.path}>
+                                {link.title}
+                            </NavLink>
+                        </Typography>)}
             </Box>
-        </AppBar>
+        </AppBar >
     );
 }

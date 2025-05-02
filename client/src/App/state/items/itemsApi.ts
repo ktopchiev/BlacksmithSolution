@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Item } from "../../models/Item";
-import { PaginatedList } from "../../models/PaginatedList";
-import SearchParams from "../../models/SearchParams";
-import ItemFilters from "../../models/ItemFilters";
+import { Item } from "../../models/item/Item";
+import { PaginatedList } from "../../models/item/PaginatedList";
+import SearchParams from "../../models/item/SearchParams";
+import ItemFilters from "../../models/item/ItemFilters";
 
 export const itemsApi = createApi({
     reducerPath: "itemsApi",

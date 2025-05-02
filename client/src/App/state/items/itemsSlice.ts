@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import SearchParams from "../../models/SearchParams";
+import SearchParams from "../../models/item/SearchParams";
 
 function initParams(): SearchParams {
     return {

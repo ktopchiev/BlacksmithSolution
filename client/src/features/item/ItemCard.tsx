@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography, Box, CardActions, Button, Paper, CardActionArea, Rating, Skeleton } from "@mui/material";
-import { Item } from "../../App/models/Item";
+import { Item } from "../../App/models/item/Item";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
@@ -84,10 +84,10 @@ export default function ItemCard({ item }: Props) {
                         size="small"
                         sx={{
                             color: "black",
-                            backgroundColor: "darkkhaki",
+                            backgroundColor: "#efd178",
                             "&: hover": {
                                 color: "white",
-                                backgroundColor: "rgb(67, 122, 0)"
+                                backgroundColor: "#4b9186"
                             }
                         }}
                     >

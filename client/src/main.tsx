@@ -16,6 +16,7 @@ import { Provider } from 'react-redux';
 import { store } from './App/state/store.ts';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFoundPage from './features/NotFoundPage.tsx';
+import LoginPage from './features/LoginPage.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
@@ -32,6 +33,7 @@ createRoot(document.getElementById('root')!).render(
 						<Route path="about" element={<AboutPage />} />
 						<Route path="contacts" element={<ContactsPage />} />
 						<Route path="*" element={<NotFoundPage />} />
+						<Route path="login" element={<LoginPage />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

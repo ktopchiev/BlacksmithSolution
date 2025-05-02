@@ -35,19 +35,32 @@ namespace Blacksmith.Core.Application.Services.User
 
             if (!await _userManager.CheckPasswordAsync(user, userLogin.Password)) return string.Empty;
 
-            return GetToken(user, userRoles);
+            return GenerateJwtToken(user, userRoles);
         }
 
-        private string GetToken(IdentityUser user, IList<string> userRoles)
+        public async Task<string> GetCurrentUserAsync(string userName)
+        {
+            if (string.IsNullOrEmpty(userName)) return string.Empty;
+
+            var user = await _userRepository.GetUserByNameAsync(userName);
+
+            if (user == null) return string.Empty;
+
+            var userRoles = await _userRepository.GetUserRolesAsync(user);
+
+            return GenerateJwtToken(user, userRoles);
+        }
+
+        private string GenerateJwtToken(IdentityUser user, IList<string> userRoles)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtKey = Encoding.ASCII.GetBytes(_conf["Jwt:Key"]);
+            var jwtKey = Encoding.ASCII.GetBytes(_conf["Jwt:Key"]!);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity([
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Name, user.UserName!),
+                    new Claim(ClaimTypes.Email, user.Email!),
                 ]),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(jwtKey), SecurityAlgorithms.HmacSha256Signature)

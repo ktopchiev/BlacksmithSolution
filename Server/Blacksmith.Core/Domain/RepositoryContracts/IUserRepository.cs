@@ -1,3 +1,4 @@
+using Blacksmith.Core.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Blacksmith.Core.Domain.RepositoryContracts
@@ -6,5 +7,6 @@ namespace Blacksmith.Core.Domain.RepositoryContracts
     {
         Task<List<IdentityUser>> GetUsersAsync();
         Task<IList<string>> GetUserRolesAsync(IdentityUser user);
+        Task<IdentityUser> GetUserByNameAsync(string userName);
     }
 }

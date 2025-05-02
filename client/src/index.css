@@ -26,6 +26,11 @@ body {
 
 a {
 	text-decoration: none;
+	color: rgb(0, 34, 255);
+}
+
+.navLink {
+	text-decoration: none;
 	color: white;
 }
 

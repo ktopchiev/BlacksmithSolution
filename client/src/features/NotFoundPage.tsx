@@ -15,19 +15,20 @@ export default function NotFoundPage() {
                 }}>
                 <Typography
                     sx={{
-                        fontFamily: "Qwigley",
-                        fontSize: "50px",
-                        color: "darkred"
+                        fontFamily: "Newsreader",
+                        fontSize: "40px",
+                        color: "rgb(158, 56, 56)",
+                        textShadow: "rgb(0, 0, 0) 5px 5px 8px"
                     }}>
-                    Naught every thing is fated to be discovered...
+                    NAUGHT EVERY THING IS FATED TO BE  DISCOVERED...
                 </Typography>
 
                 <Box
                     component="img"
                     src="./images/not-found-2.png"
                     sx={{
-                        maxHeight: 500,
-                        maxWidth: 500
+                        maxHeight: 450,
+                        maxWidth: 450
                     }}></Box>
 
                 <Button

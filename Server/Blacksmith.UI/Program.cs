@@ -6,10 +6,13 @@ using Blacksmith.Infrastructure.BlacksmithDbContext;
 using Blacksmith.Infrastructure.Repositories;
 using Blacksmith.UI.Middleware;
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Blacksmith.Core.Application.ServiceContracts.User;
 using Blacksmith.Core.Application.Services.User;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace Blacksmith.UI
 {
@@ -24,6 +27,33 @@ namespace Blacksmith.UI
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    BearerFormat = "JWT",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Description = "Put Bearer + your token in the box below",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        jwtSecurityScheme, Array.Empty<string>()
+                    }
+                });
+            });
 
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
             builder.Services.AddScoped<IItemAdderService, ItemAdderService>();
@@ -37,10 +67,24 @@ namespace Blacksmith.UI
                 }
             );
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddCors();
+
+            builder.Services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddRoles<IdentityRole>()
                             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            builder.Services.AddCors();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                };
+            });
 
             builder.Services.AddAuthorization();
 
@@ -53,12 +97,16 @@ namespace Blacksmith.UI
             {
                 app.UseDeveloperExceptionPage();
                 app.MapOpenApi();
-                app.MapScalarApiReference();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
+                });
             }
 
             app.UseCors(opt =>
             {
-                opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:5173");
+                opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
             });
 
             app.UseAuthentication();

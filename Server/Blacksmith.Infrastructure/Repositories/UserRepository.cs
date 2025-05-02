@@ -1,3 +1,4 @@
+using Blacksmith.Core.Domain.Models;
 using Blacksmith.Core.Domain.RepositoryContracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,11 @@ namespace Blacksmith.Infrastructure.Repositories
         public async Task<IList<string>> GetUserRolesAsync(IdentityUser user)
         {
             return await _userManager.GetRolesAsync(user);
+        }
+
+        public async Task<IdentityUser> GetUserByNameAsync(string userName)
+        {
+            return await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userName);
         }
     }
 }

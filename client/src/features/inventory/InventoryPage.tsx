@@ -1,8 +1,8 @@
 import { Grid2, LinearProgress } from "@mui/material";
 import ItemCard from "../item/ItemCard";
-import { Item } from "../../App/models/Item";
+import { Item } from "../../App/models/item/Item";
 import { useGetAllItemsQuery, useGetItemFiltersQuery } from "../../App/state/items/itemsApi";
-import { PaginatedList } from "../../App/models/PaginatedList";
+import { PaginatedList } from "../../App/models/item/PaginatedList";
 import { useAppSelector } from "../../App/state/store";
 import ItemsFilter from "./components/ItemsFilter";
 import SortSelect from "./components/SortSelect";
@@ -24,7 +24,7 @@ export default function InventoryPage() {
     return (
 
         <>
-            <Grid2 container spacing={2} sx={{ m: 2, p: 0 }}>
+            <Grid2 container spacing={2} sx={{ m: 2, p: 1 }}>
 
                 <Grid2 size={2} sx={{ display: "block", mt: "55px" }}>
                     <ItemsFilter type={"Category"} options={filters?.categories} />
