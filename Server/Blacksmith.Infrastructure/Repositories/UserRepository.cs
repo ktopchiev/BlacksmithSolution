@@ -7,24 +7,24 @@ namespace Blacksmith.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public UserRepository(UserManager<IdentityUser> userManager)
+        public UserRepository(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<List<IdentityUser>> GetUsersAsync()
+        public async Task<List<User>> GetUsersAsync()
         {
             return await _userManager.Users.ToListAsync();
         }
 
-        public async Task<IList<string>> GetUserRolesAsync(IdentityUser user)
+        public async Task<IList<string>> GetUserRolesAsync(User user)
         {
             return await _userManager.GetRolesAsync(user);
         }
 
-        public async Task<IdentityUser> GetUserByNameAsync(string userName)
+        public async Task<User> GetUserByNameAsync(string userName)
         {
             return await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userName);
         }
