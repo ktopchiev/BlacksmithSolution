@@ -63,7 +63,7 @@ namespace Blacksmith.UI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(UserAddRequest userAddRequest)
+        public async Task<ActionResult<string>> Register(UserAddRequest userAddRequest)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.Select(x => x.Value!.Errors)
                 .Where(y => y.Count > 0)
@@ -73,7 +73,7 @@ namespace Blacksmith.UI.Controllers
 
             var result = await _userService.Register(userAddRequest);
 
-            if (!result.Contains("Succeed") || string.IsNullOrEmpty(result)) return BadRequest();
+            if (!result.Contains("Succeeded") || string.IsNullOrEmpty(result)) return BadRequest();
 
             return Ok(result);
 

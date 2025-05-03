@@ -1,5 +1,5 @@
 import { Grid2, LinearProgress } from "@mui/material";
-import ItemCard from "../item/ItemCard";
+import ItemCard from "../item/components/ItemCard";
 import { Item } from "../../App/models/item/Item";
 import { useGetAllItemsQuery, useGetItemFiltersQuery } from "../../App/state/items/itemsApi";
 import { PaginatedList } from "../../App/models/item/PaginatedList";

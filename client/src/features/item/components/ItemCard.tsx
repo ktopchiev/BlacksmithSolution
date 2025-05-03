@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography, Box, CardActions, Button, Paper, CardActionArea, Rating, Skeleton } from "@mui/material";
-import { Item } from "../../App/models/item/Item";
+import { Item } from "../../../App/models/item/Item";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 

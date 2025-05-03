@@ -8,15 +8,16 @@ import '@fontsource/roboto/700.css';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { createRoot } from 'react-dom/client';
 import HomePage from './features/HomePage.tsx';
-import InventoryPage from './features/inventory/InventoryPage.tsx';
 import AboutPage from './features/AboutPage.tsx';
 import ContactsPage from './features/ContactsPage.tsx';
-import ItemPage from './features/item/ItemPage.tsx';
 import { Provider } from 'react-redux';
 import { store } from './App/state/store.ts';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFoundPage from './features/NotFoundPage.tsx';
-import LoginPage from './features/LoginPage.tsx';
+import InventoryPage from './features/inventory/InventoryPage.tsx';
+import ItemPage from './features/item/ItemPage.tsx';
+import LoginPage from './features/user/LoginPage.tsx';
+import RegisterPage from './features/user/RegisterPage.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
@@ -34,6 +35,7 @@ createRoot(document.getElementById('root')!).render(
 						<Route path="contacts" element={<ContactsPage />} />
 						<Route path="*" element={<NotFoundPage />} />
 						<Route path="login" element={<LoginPage />} />
+						<Route path="register" element={<RegisterPage />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
