@@ -147,7 +147,7 @@ export default function LoginPage() {
                             />
                         </FormControl>
                         <Button variant="contained" type="submit">Sign in</Button>
-                        <Typography>Don't have an account? <br /> Please <Link to="/register">Sign Up</Link></Typography>
+                        <Typography>Hast thou no account? <br /> Pray, <Link to="/register">enlist thyself.</Link></Typography>
                     </Box>
                 </form>
             </BlurredPaper>

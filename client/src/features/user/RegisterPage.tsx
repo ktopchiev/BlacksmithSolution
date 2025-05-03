@@ -176,7 +176,7 @@ export default function RegisterPage() {
                             />
                         </FormControl>
                         <Button variant="contained" type="submit">Sign Up</Button>
-                        <Typography>Already have an account? <br /> Please <Link to="/login">Log In</Link></Typography>
+                        <Typography>Hast thou an account already? <br /> Pray, <Link to="/login">Log In</Link></Typography>
                     </Box>
                 </form>
             </BlurredPaper>
