@@ -63,7 +63,7 @@ namespace Blacksmith.UI
 
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
                 {
-                    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+                    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
                 }
             );
 

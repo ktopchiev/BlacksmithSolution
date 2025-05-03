@@ -28,7 +28,7 @@ export default function RegisterPage() {
             email: data.email,
             password: data.password,
         }
-        const response = await registerUser(registerModel);
+        await registerUser(registerModel);
         navigate("/login");
     }
 
