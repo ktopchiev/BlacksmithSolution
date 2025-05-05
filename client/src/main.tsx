@@ -21,24 +21,23 @@ import RegisterPage from './features/user/RegisterPage.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<Provider store={store}>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<App />} >
-						<Route index element={<HomePage />} />
-						<Route path="inventory">
-							<Route index element={<InventoryPage />} />
-							<Route path=":itemId" element={<ItemPage />} />
-						</Route>
-						<Route path="about" element={<AboutPage />} />
-						<Route path="contacts" element={<ContactsPage />} />
-						<Route path="*" element={<NotFoundPage />} />
-						<Route path="login" element={<LoginPage />} />
-						<Route path="register" element={<RegisterPage />} />
+
+	<Provider store={store}>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<App />} >
+					<Route index element={<HomePage />} />
+					<Route path="inventory">
+						<Route index element={<InventoryPage />} />
+						<Route path=":itemId" element={<ItemPage />} />
 					</Route>
-				</Routes>
-			</BrowserRouter>
-		</Provider>
-	</StrictMode >,
+					<Route path="about" element={<AboutPage />} />
+					<Route path="contacts" element={<ContactsPage />} />
+					<Route path="*" element={<NotFoundPage />} />
+					<Route path="login" element={<LoginPage />} />
+					<Route path="register" element={<RegisterPage />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
+	</Provider>
 )

@@ -54,8 +54,8 @@ namespace Blacksmith.UI.Controllers
 
             var userResponse = new UserResponse
             {
-                UserName = user.UserName,
-                Email = user.Email,
+                UserName = user!.UserName!,
+                Email = user!.Email!,
                 Token = userToken,
             };
 
