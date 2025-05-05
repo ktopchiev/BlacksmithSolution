@@ -28,7 +28,7 @@ function ItemsPagination({ totalPages, currentPageNumber }: Props) {
             }}
             count={totalPages}
             page={currentPageNumber}
-            onChange={(event, value) => dispatch(setSearchParams({ CurrentPageNumber: value }))}
+            onChange={(_event, value) => dispatch(setSearchParams({ CurrentPageNumber: value }))}
         />
     )
 }

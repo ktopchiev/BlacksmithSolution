@@ -103,6 +103,11 @@ namespace Blacksmith.UI
                     c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
                 });
             }
+            else
+            {
+                app.UseDefaultFiles();
+                app.UseStaticFiles();
+            }
 
             app.UseCors(opt =>
             {
@@ -113,6 +118,8 @@ namespace Blacksmith.UI
             app.UseAuthorization();
 
             app.MapControllers();
+
+            if (!app.Environment.IsDevelopment()) app.MapFallbackToController("Index", "Fallback");
 
             var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -130,7 +137,7 @@ namespace Blacksmith.UI
                 logger.LogError(ex, "There's a problem with the database migration");
             }
 
-            app.Run(); 
+            app.Run();
         }
     }
 }
