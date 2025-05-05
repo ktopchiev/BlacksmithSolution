@@ -130,7 +130,7 @@ namespace Blacksmith.UI
                 logger.LogError(ex, "There's a problem with the database migration");
             }
 
-            app.Run();
+            app.Run(); 
         }
     }
 }
