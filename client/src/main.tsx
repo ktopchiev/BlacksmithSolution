@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import './index.css'
 import App from './App/layout/App.tsx'
 import '@fontsource/roboto/300.css';
