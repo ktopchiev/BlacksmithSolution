@@ -5,17 +5,21 @@ import { useEffect } from "react"
 import { useAppDispatch } from "../state/store"
 import { useRefreshMutation } from "../state/user/userApi"
 import { setCurrentUser } from "../state/user/userSlice"
+import { getJwtTokenFromLocalStorage } from "../util/utility"
 
 function App() {
 	const dispatch = useAppDispatch();
 	const [refresh] = useRefreshMutation();
 
 	useEffect(() => {
-		const fetchData = async () => {
-			let data = await refresh().unwrap();
-			dispatch(setCurrentUser(data ?? JSON.parse(localStorage.getItem("user")!)));
+		const fetchUserData = async () => {
+			let localStorageUserData = getJwtTokenFromLocalStorage();
+			if (localStorageUserData) {
+				let userData = await refresh().unwrap();
+				dispatch(setCurrentUser(userData));
+			}
 		};
-		fetchData();
+		fetchUserData();
 	}, [])
 
 	return (
