@@ -61,6 +61,7 @@ namespace Blacksmith.UI
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
 
+            //Test
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
                 {
                     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
