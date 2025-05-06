@@ -61,10 +61,20 @@ namespace Blacksmith.UI
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
 
-            //Test
+            string connectionString;
+
+            if (builder.Environment.IsDevelopment())
+            {
+                connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            }
+            else
+            {
+                connectionString = Environment.GetEnvironmentVariable("AZURE_POSTGRESQL_CONNECTIONSTRING");
+            }
+
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
                 {
-                    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+                    opt.UseNpgsql(connectionString);
                 }
             );
 
