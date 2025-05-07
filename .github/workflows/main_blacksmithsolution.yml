@@ -18,16 +18,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check if client folder changed
+        id: changed-client
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            changed:
+              - 'client/**'
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x' # or your project's Node version
+          node-version: '22.x'
 
       - name: Install dependencies
+        if: steps.changed-client.outputs.changed == 'true'
         run: npm install
         working-directory: client
 
       - name: Build project
+        if: steps.changed-client.outputs.changed == 'true'
         run: npm run build
         working-directory: client
 

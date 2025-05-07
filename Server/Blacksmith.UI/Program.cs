@@ -103,6 +103,9 @@ namespace Blacksmith.UI
 
             var app = builder.Build();
 
+            var logger = app.Services.GetRequiredService<ILogger<Program>>();
+            logger.LogInformation("App is starting...");
+
             app.UseMiddleware<ExceptionMiddleware>();
 
             // Configure the HTTP request pipeline.
