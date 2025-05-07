@@ -72,6 +72,8 @@ namespace Blacksmith.UI
                 connectionString = Environment.GetEnvironmentVariable("AZURE_POSTGRESQL_CONNECTIONSTRING");
             }
 
+            System.Console.WriteLine(connectionString);
+
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
                 {
                     opt.UseNpgsql(connectionString);
