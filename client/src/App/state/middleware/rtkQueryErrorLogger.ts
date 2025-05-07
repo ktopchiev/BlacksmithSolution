@@ -1,11 +1,17 @@
 import { isRejectedWithValue } from '@reduxjs/toolkit'
 import type { MiddlewareAPI, Middleware } from '@reduxjs/toolkit'
-import { toast } from 'react-toastify'
+import { Slide, toast, ToastOptions } from 'react-toastify'
 
 interface ApiError {
     status: number,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?: any
+}
+
+const toastStyles: ToastOptions = {
+    position: "bottom-right",
+    theme: "dark",
+    transition: Slide,
 }
 
 /**
@@ -19,13 +25,13 @@ export const rtkQueryErrorLogger: Middleware =
 
             switch (errorPayload.status) {
                 case 404:
-                    toast.warning('Not Found', { position: "bottom-right" })
+                    toast.warning('Not Found', toastStyles)
                     break;
                 case 400:
-                    toast.error('Bad Request', { position: "bottom-right" })
+                    toast.error('Bad Request', toastStyles)
                     break;
                 case 500:
-                    toast.error('Internal Server Error', { position: "bottom-right" })
+                    toast.error('Internal Server Error', toastStyles)
                     break;
                 default:
                     break;
