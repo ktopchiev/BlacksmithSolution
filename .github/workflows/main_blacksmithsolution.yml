@@ -25,9 +25,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: client
 
       - name: Build project
         run: npm run build
+        working-directory: client
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
