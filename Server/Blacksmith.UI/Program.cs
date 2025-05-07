@@ -103,9 +103,6 @@ namespace Blacksmith.UI
 
             var app = builder.Build();
 
-            var logger = app.Services.GetRequiredService<ILogger<Program>>();
-            logger.LogInformation("App is starting...");
-
             app.UseMiddleware<ExceptionMiddleware>();
 
             // Configure the HTTP request pipeline.
@@ -142,6 +139,9 @@ namespace Blacksmith.UI
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            logger.LogInformation("App is starting...");
+            logger.LogInformation($"Connections string is: {connectionString}");
 
             try
             {
