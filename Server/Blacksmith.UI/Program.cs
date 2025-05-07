@@ -61,18 +61,7 @@ namespace Blacksmith.UI
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
 
-            string connectionString;
-
-            if (builder.Environment.IsDevelopment())
-            {
-                connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            }
-            else
-            {
-                connectionString = Environment.GetEnvironmentVariable("AZURE_POSTGRESQL_CONNECTIONSTRING");
-            }
-
-            System.Console.WriteLine(connectionString);
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<ApplicationDbContext>(opt =>
                 {
@@ -139,9 +128,6 @@ namespace Blacksmith.UI
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            logger.LogInformation("App is starting...");
-            logger.LogInformation($"Connections string is: {connectionString}");
 
             try
             {
