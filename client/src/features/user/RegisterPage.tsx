@@ -34,6 +34,7 @@ export default function RegisterPage() {
             const response = await registerUser(registerModel).unwrap();
             console.log(response);
             toast.success(response);
+            navigate("/login");
         } catch (err: any) {
             // Error
             const errorMessage =
