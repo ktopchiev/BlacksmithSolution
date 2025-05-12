@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../state/store";
 import { useState } from "react";
 import { setLogOut } from "../state/user/userSlice";
+import { toast } from "react-toastify";
 
 export default function Header() {
 
@@ -36,6 +37,7 @@ export default function Header() {
         localStorage.removeItem("user");
         dispatch(setLogOut());
         navigate("/");
+        toast.success("Successfuly logged out!")
     }
 
     return (
@@ -118,24 +120,24 @@ export default function Header() {
                             <MenuItem onClick={handleClose}>Profile</MenuItem>
                             <MenuItem onClick={handleClose}>My account</MenuItem>
                             <MenuItem onClick={handleLogOut}> Logout</MenuItem>
-                    </Menu>
-            </> :
+                        </Menu>
+                    </> :
                     userNavLinks.map(link =>
-            <Typography
-                sx={{
-                    fontSize: "25px",
-                    fontFamily: "'MedievalSharp',  cursive",
-                    px: 1
-                }}
-                key={link.path}
-            >
-                <NavLink
-                    className={"navLink"}
-                    to={link.path}>
-                    {link.title}
-                </NavLink>
-            </Typography>)}
-        </Box>
+                        <Typography
+                            sx={{
+                                fontSize: "25px",
+                                fontFamily: "'MedievalSharp',  cursive",
+                                px: 1
+                            }}
+                            key={link.path}
+                        >
+                            <NavLink
+                                className={"navLink"}
+                                to={link.path}>
+                                {link.title}
+                            </NavLink>
+                        </Typography>)}
+            </Box>
         </AppBar >
     );
 }

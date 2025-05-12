@@ -7,6 +7,7 @@ import { useLoginMutation } from "../../App/state/user/userApi";
 import { useAppDispatch } from "../../App/state/store";
 import { LoginModel } from "../../App/models/user/LoginModel";
 import { setCurrentUser } from "../../App/state/user/userSlice";
+import { toast } from "react-toastify";
 
 type Inputs = {
     username: string;
@@ -29,10 +30,17 @@ export default function LoginPage() {
             Username: data.username,
             Password: data.password,
         }
-        const response = await login(loginModel).unwrap();
-        localStorage.setItem("user", JSON.stringify(response));
-        dispatch(setCurrentUser(response));
-        navigate('/inventory');
+
+        try {
+            const response = await login(loginModel).unwrap();
+            localStorage.setItem("user", JSON.stringify(response));
+            dispatch(setCurrentUser(response));
+            toast.success("User logged in successfuly!");
+            navigate('/inventory');
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
 

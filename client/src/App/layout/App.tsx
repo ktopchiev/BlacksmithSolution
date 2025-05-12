@@ -1,6 +1,7 @@
 import { Outlet } from "react-router"
 import Header from "./Header"
-import { ToastContainer } from "react-toastify"
+import { Slide, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import { useEffect } from "react"
 import { useAppDispatch } from "../state/store"
 import { useRefreshMutation } from "../state/user/userApi"
@@ -24,9 +25,9 @@ function App() {
 
 	return (
 		<>
+			<ToastContainer position="bottom-right" hideProgressBar={true} transition={Slide} theme="dark" />
 			<Header />
 			<Outlet />
-			<ToastContainer />
 		</>
 	)
 }

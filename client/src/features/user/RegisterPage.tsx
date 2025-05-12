@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useRegisterUserMutation } from "../../App/state/user/userApi";
 import UserRegisterModel from "../../App/models/user/UserRegisterModel";
+import { toast } from "react-toastify";
 
 type Inputs = {
     username: string;
@@ -16,7 +17,7 @@ export default function RegisterPage() {
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const { register, handleSubmit } = useForm<Inputs>();
-    const [registerUser] = useRegisterUserMutation();
+    const [registerUser, { isLoading }] = useRegisterUserMutation();
     const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -27,11 +28,19 @@ export default function RegisterPage() {
             userName: data.username,
             email: data.email,
             password: data.password,
-        }
-        await registerUser(registerModel);
-        navigate("/login");
-    }
+        };
 
+        try {
+            const response = await registerUser(registerModel).unwrap();
+            console.log(response);
+            toast.success(response);
+        } catch (err: any) {
+            // Error
+            const errorMessage =
+                err?.data?.message || 'Something went wrong creating the user';
+            toast.error(errorMessage);
+        }
+    }
 
     const BlurredPaper = styled(Paper)(({ theme }) => ({
         position: 'relative',
