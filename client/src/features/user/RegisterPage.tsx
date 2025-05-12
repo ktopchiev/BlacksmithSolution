@@ -17,7 +17,7 @@ export default function RegisterPage() {
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const { register, handleSubmit } = useForm<Inputs>();
-    const [registerUser, { isLoading }] = useRegisterUserMutation();
+    const [registerUser] = useRegisterUserMutation();
     const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -31,15 +31,11 @@ export default function RegisterPage() {
         };
 
         try {
-            const response = await registerUser(registerModel).unwrap();
-            console.log(response);
-            toast.success(response);
+            await registerUser(registerModel).unwrap();
+            toast.success("User has been successfully registered!");
             navigate("/login");
         } catch (err: any) {
-            // Error
-            const errorMessage =
-                err?.data?.message || 'Something went wrong creating the user';
-            toast.error(errorMessage);
+            console.log(err?.data?.message);
         }
     }
 

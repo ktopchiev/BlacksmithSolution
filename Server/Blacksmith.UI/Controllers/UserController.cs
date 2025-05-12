@@ -63,20 +63,19 @@ namespace Blacksmith.UI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<string>> Register(UserAddRequest userAddRequest)
+        public async Task<ActionResult> Register(UserAddRequest userAddRequest)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.Select(x => x.Value!.Errors)
                 .Where(y => y.Count > 0)
                 .ToList());
 
-            if (userAddRequest.UserName == "" || userAddRequest.Email == "") return BadRequest("Username and Email cannot be empty!");
+            if (userAddRequest.UserName == "" || userAddRequest.Email == "") return BadRequest(new { message = "Username and Email cannot be empty!" });
 
             var result = await _userService.Register(userAddRequest);
 
-            if (!result.Contains("Succeeded") || string.IsNullOrEmpty(result)) return BadRequest();
+            if (!result.Succeeded || result == null) return BadRequest();
 
-            return Ok(result);
-
+            return Ok(new { message = result });
         }
     }
 }

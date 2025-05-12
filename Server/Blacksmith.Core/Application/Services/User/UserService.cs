@@ -77,25 +77,25 @@ namespace Blacksmith.Core.Application.Services.User
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<string> Register(UserAddRequest userAddRequest)
+        public async Task<IdentityResult> Register(UserAddRequest userAddRequest)
         {
-            if (userAddRequest == null) return string.Empty;
+            if (userAddRequest == null) return null;
 
             var users = await _userRepository.GetUsersAsync();
 
             var user = users.Find(u => u.UserName == userAddRequest.UserName);
 
-            if (user != null) return string.Empty;
+            if (user != null) return null;
 
             user = userAddRequest.ToUser();
 
             var result = await _userRepository.AddNewUserAsync(user, userAddRequest.Password);
 
-            if (!result.ToString().Contains("Succeed")) return string.Empty;
+            if (!result.Succeeded) return null;
 
             await _userManager.AddToRoleAsync(user, "User");
 
-            return result.ToString();
+            return result;
         }
     }
 }
