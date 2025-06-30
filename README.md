@@ -26,6 +26,17 @@ The application is connected to a **PostgreSQL** database hosted on **Supabase**
 
 ---
 
+## 🔐 Test User Credentials
+
+To test the app functionality without registering a new account, use the following credentials:
+
+- **Username:** admin  
+- **Password:** Pa$$w0rd
+
+> ⚠️ These credentials are for testing purposes only.
+
+---
+
 ## 🛠️ Tech Stack
 
 | Frontend        | Backend         | DevOps & DB       |
