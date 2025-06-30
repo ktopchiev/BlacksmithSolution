@@ -36,12 +36,60 @@ The application is connected to a **PostgreSQL** database hosted on **Supabase**
 | Material UI     | JWT Auth        | CI/CD Pipelines   |
 
 ---
+## ☁️ Deployment (CI/CD)
+
+Deployment is fully automated using **GitHub Actions** and **Azure App Service**.
+
+### 🚀 Workflow Overview
+
+✅ On **every push to the `main` branch**, the pipeline:
+
+1. 🏗️ **Builds the frontend**  
+   Runs `npm run build` inside the `client/` folder.
+
+2. ⚙️ **Publishes the backend**  
+   Uses `dotnet publish` to prepare the ASP.NET Core app.
+
+3. ☁️ **Deploys to Azure**  
+   Pushes the published output using the `azure/webapps-deploy` action.
+
+4. 🛢️ **Database**  
+   Uses either **Supabase PostgreSQL** or **Azure Database for PostgreSQL**.
+
+📄 **GitHub Actions Workflow File:**  
+`.github/workflows/azure-webapp.yml`
+
+---
+
+**Note:**  
+This project was built as a learning exercise to practice:
+- RTK Query for data fetching and caching
+- Clean Architecture principles for maintainable code
+- Azure deployment using GitHub Actions
+
+---
 
 ## 📁 Project Structure
 BlacksmithSolution/
 │
 ├── Blacksmith.Core # Domain and Application interfaces
+
 ├── Blacksmith.Infrastructure # Data access layer, repositories, DB context
+
 ├── Blacksmith.UI # API (ASP.NET) + middleware
+
 ├── client/ # React frontend app
+
 └── .github/workflows/ # GitHub Actions for CI/CD
+
+## 📌 TODO / Improvements
+
+✅ Add registration & user roles
+
+⏳ Admin dashboard
+
+⏳ Shopping cart and checkout
+
+⏳ Unit and integration tests
+
+⏳ Responsive UI
