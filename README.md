@@ -38,4 +38,10 @@ The application is connected to a **PostgreSQL** database hosted on **Supabase**
 ---
 
 ## 📁 Project Structure
-
+BlacksmithSolution/
+│
+├── Blacksmith.Core # Domain and Application interfaces
+├── Blacksmith.Infrastructure # Data access layer, repositories, DB context
+├── Blacksmith.UI # API (ASP.NET) + middleware
+├── client/ # React frontend app
+└── .github/workflows/ # GitHub Actions for CI/CD
