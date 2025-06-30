@@ -14,6 +14,14 @@ The application is connected to a **PostgreSQL** database hosted on **Supabase**
 
 ---
 
+**Note:**  
+This project was built as a learning exercise to practice:
+- RTK Query for data fetching and caching
+- Clean Architecture principles for maintainable code
+- Azure deployment using GitHub Actions
+
+---
+
 ## 🚀 Features
 
 - 🔐 User authentication with JWT
@@ -69,14 +77,6 @@ Deployment is fully automated using **GitHub Actions** and **Azure App Service**
 
 📄 **GitHub Actions Workflow File:**  
 `.github/workflows/azure-webapp.yml`
-
----
-
-**Note:**  
-This project was built as a learning exercise to practice:
-- RTK Query for data fetching and caching
-- Clean Architecture principles for maintainable code
-- Azure deployment using GitHub Actions
 
 ---
 
