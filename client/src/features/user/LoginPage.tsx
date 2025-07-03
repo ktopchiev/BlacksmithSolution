@@ -25,7 +25,21 @@ export default function LoginPage() {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleLogin = async (data: { username: any; password: any; }) => {
-        
+        event?.preventDefault();
+        const loginModel: LoginModel = {
+            Username: data.username,
+            Password: data.password,
+        }
+
+        try {
+            const response = await login(loginModel).unwrap();
+            localStorage.setItem("user", JSON.stringify(response));
+            dispatch(setCurrentUser(response));
+            toast.success("User logged in successfuly!");
+            navigate('/inventory');
+        } catch (error) {
+            console.log(error);
+        }
 
     }
 
