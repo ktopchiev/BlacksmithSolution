@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { createRoot } from 'react-dom/client';
 import HomePage from './features/HomePage.tsx';
 import AboutPage from './features/AboutPage.tsx';
-import ContactsPage from './features/ContactsPage.tsx';
+import ContactPage from './features/ContactPage.tsx';
 import { Provider } from 'react-redux';
 import { store } from './App/state/store.ts';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,7 +31,7 @@ createRoot(document.getElementById('root')!).render(
 						<Route path=":itemId" element={<ItemPage />} />
 					</Route>
 					<Route path="about" element={<AboutPage />} />
-					<Route path="contacts" element={<ContactsPage />} />
+					<Route path="contacts" element={<ContactPage />} />
 					<Route path="*" element={<NotFoundPage />} />
 					<Route path="login" element={<LoginPage />} />
 					<Route path="register" element={<RegisterPage />} />
